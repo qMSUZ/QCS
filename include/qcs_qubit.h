@@ -63,6 +63,7 @@ typedef QubitBaseDesc* pf_qcs_qubit_base_desc;
 tf_qcs_qubit* qcs_new_qubit();
 void qcs_delete_qubit(tf_qcs_qubit *q);
 
+void qcs_make_projector_in_base(tf_qcs_qubit_base_desc *base);
 void qcs_set_base(tf_qcs_qubit_base_desc *base, tf_qcs_complex v0_a, tf_qcs_complex v0_b, tf_qcs_complex v1_a, tf_qcs_complex v1_b);
 
 tf_qcs_qubit_base_desc *qcs_new_std_base();
@@ -73,13 +74,17 @@ tf_qcs_qubit_base_desc *qcs_new_pauli_z_base();
 tf_qcs_qubit_base_desc *qcs_new_m_base(tf_qcs_real_number theta);
 tf_qcs_qubit_base_desc *qcs_new_b_base(tf_qcs_real_number theta);
 
+void qcs_zero_base(tf_qcs_qubit_base_desc *base);
 void qcs_make_std_base(tf_qcs_qubit_base_desc *base);
 void qcs_make_hadamard_base(tf_qcs_qubit_base_desc *base);
 void qcs_make_pauli_x_base(tf_qcs_qubit_base_desc *base);
 void qcs_make_pauli_y_base(tf_qcs_qubit_base_desc *base);
 void qcs_make_pauli_z_base(tf_qcs_qubit_base_desc *base);
 void qcs_make_m_base(tf_qcs_qubit_base_desc *base, tf_qcs_real_number theta);
+
 void qcs_make_b_base(tf_qcs_qubit_base_desc *base, tf_qcs_real_number theta);
+void qcs_make_b_base_float(tf_qcs_qubit_base_desc *base, float theta);
+
 //void qcs_update_m_base(tf_qcs_qubit_base_desc *base, tf_qcs_real_number theta); // to delete
 
 void qcs_base_print(tf_qcs_qubit_base_desc *base);

@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 -- 2010 by Marek Sawerwain                         *
  *                                         <M.Sawerwain@gmail.com>         *
- *   Copyright (C) 2005 -- 2006 by Kamil Paw³owski                         *
+ *   Copyright (C) 2005 -- 2006 by Kamil Pawłowski                         *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
  *   http://code.google.com/p/qcs                                          *
@@ -48,7 +48,7 @@ extern const tf_qcs_complex zj;
 
 /* complex functions */
 
-tf_qcs_complex *qcs_create_complex_float_arg(float a, float b);
+tf_qcs_complex *qcs_create_complex_float_arg(tf_qcs_real_number a, tf_qcs_real_number b);
 tf_qcs_complex *qcs_create_complex(tf_qcs_real_number a, tf_qcs_real_number b);
 
 void qcs_complex_add(tf_qcs_complex *a_in, tf_qcs_complex *b_in, tf_qcs_complex *c_out);

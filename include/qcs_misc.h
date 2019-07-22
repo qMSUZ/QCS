@@ -26,10 +26,12 @@
 
 #include <time.h>
 #include <stdlib.h>
-#include <mm_malloc.h>
+//#include <mm_malloc.h>
 
 
-#define tf_qcs_real_number float
+//#define tf_qcs_real_number double
+typedef float tf_qcs_real_number ;
+//typedef double tf_qcs_real_number ;
 
 #define QCS_ACCURACY -7
 #define QCS_EPS 0.000001
@@ -99,12 +101,12 @@ int qcs_kronecker_delta_function(int k, int j);
 
 double qcs_diffclock(clock_t clock1, clock_t clock2);
 
-inline void reset_and_start_timer();
-inline double get_elapsed_mcycles();
-inline double get_elapsed_cycles_raw();
-inline int CPUSupportsSSE2();
-inline int CPUSupportsSSE4();
-inline int CPUSupportsAVX();
+void reset_and_start_timer();
+double get_elapsed_mcycles();
+double get_elapsed_cycles_raw();
+int CPUSupportsSSE2();
+int CPUSupportsSSE4();
+int CPUSupportsAVX();
 
 #ifdef __cplusplus
 }

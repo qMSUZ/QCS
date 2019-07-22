@@ -1,8 +1,12 @@
 /***************************************************************************
- *   Copyright (C) 2005 -- 2011 by Marek Sawerwain                         *
+ *   Copyright (C) 2019 by Marek Sawerwain                                 *
  *                                         <M.Sawerwain@gmail.com>         *
- *   Copyright (C) 2007 -- 2008 by Przemys≥aw Ratajczak                    *
- *   Copyright (C) 2005 -- 2006 by Kamil Paw≥owski                         *
+ *                                         <M.Sawerwain@issi.uz.zgora.pl   *
+ *                                                                         *
+ *   Copyright (C) 2005 -- 2012 by Marek Sawerwain                         *
+ *                                         <M.Sawerwain@gmail.com>         *
+ *   Copyright (C) 2007 -- 2008 by Przemys≈Çaw Ratajczak                    *
+ *   Copyright (C) 2005 -- 2006 by Kamil Paw≈Çowski                         *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
  *   http://code.google.com/p/qcs                                          *
@@ -96,7 +100,6 @@ typedef struct svd_decomposition {
 typedef SVDDecomposition tf_qcs_svd_decomposition;
 typedef SVDDecomposition* pf_qcs_svd_decomposition;
 
-
 /* matrix of any size which contains complex numbers */
 
 tf_qcs_matrix *qcs_create_matrix(int rows, int cols);
@@ -115,6 +118,17 @@ tf_qcs_matrix *qcs_create_density_random_matrix(int size);
 
 tf_qcs_matrix *qcs_create_hermitian_random_real_matrix(int size);
 tf_qcs_matrix *qcs_create_hermitian_random_matrix(int size);
+
+tf_qcs_matrix *qcs_create_matrix_arange_operation(tf_qcs_real_number _start, tf_qcs_real_number _end, tf_qcs_real_number _step);
+tf_qcs_matrix *qcs_create_matrix_linspace_operation_with_endpoint(tf_qcs_real_number _start, tf_qcs_real_number _end, int _n_count);
+tf_qcs_matrix *qcs_create_matrix_linspace_operation_without_endpoint(tf_qcs_real_number _start, tf_qcs_real_number _end, int _n_count);
+
+tf_qcs_matrix *qcs_create_matrix_arange_operation_with_float_args(float _start, float _end, float _step);
+tf_qcs_matrix *qcs_create_matrix_linspace_operation_with_endpoint_with_float_args(float _start, float _end, int _n_count);
+tf_qcs_matrix *qcs_create_matrix_linspace_operation_without_endpoint_with_float_args(float _start, float _end, int _n_count);
+
+tf_qcs_matrix *qcs_create_create_operator(int N);
+tf_qcs_matrix *qcs_create_destroy_operator(int N);
 
 void qcs_delete_matrix(tf_qcs_matrix *a_out);
 void qcs_copy_matrix(tf_qcs_matrix *a_in, tf_qcs_matrix *b_out);
@@ -149,6 +163,8 @@ int qcs_non_zero_elements_of_matrix(tf_qcs_matrix *a_in);
 
 void qcs_det_matrix(tf_qcs_matrix *a_in, tf_qcs_complex *b_out);
 void qcs_inv_matrix(tf_qcs_matrix *a_in);
+
+void qcs_inv_2x2_matrix(tf_qcs_matrix *a_in);
 
 void qcs_transpose_matrix(tf_qcs_matrix *a_in);
 void qcs_partial_transpose_matrix_qudit(tf_qcs_matrix *a_in, int i);
@@ -284,12 +300,10 @@ tf_qcs_real_number qcs_ccnr_criterion(tf_qcs_matrix *m);
 tf_qcs_matrix* qcs_create_depolarizing_channel_operator_for_qubit(int m, tf_qcs_real_number p);
 tf_qcs_matrix* qcs_create_depolarizing_channel_operator_for_qudit(int m, int d, tf_qcs_real_number p);
 
-
 /* amplitude damping Kraus operators for qubit and qudit */
 
 tf_qcs_matrix* qcs_create_amplitude_damping_operator_for_qubit(int m, tf_qcs_real_number p);
 tf_qcs_matrix* qcs_create_amplitude_damping_operator_for_qudit(int m, int d, tf_qcs_real_number p);
-
 
 /* phase damping Kraus operators for qubit and qudit */
 
@@ -297,11 +311,10 @@ tf_qcs_matrix* qcs_create_phase_damping_operator_for_qubit(int m, tf_qcs_real_nu
 tf_qcs_matrix* qcs_create_phase_damping_v2_operator_for_qubit(int m, tf_qcs_real_number p);
 tf_qcs_matrix* qcs_create_phase_damping_operator_for_qudit(int m, int d, tf_qcs_real_number p);
 
-
 /* phase flip Kraus operators for qubit and qudit */
 
 tf_qcs_matrix* qcs_create_phase_flip_operator_for_qubit(int m, tf_qcs_real_number p);
-tf_qcs_matrix* qcs_create_phase_flip_operator_for_qudit(int m, int d, tf_qcs_real_number p);
+//tf_qcs_matrix* qcs_create_phase_flip_operator_for_qudit(int m, int d, tf_qcs_real_number p);
 
 /* phase flip Kraus operators for qubit and qudit */
 
@@ -315,7 +328,7 @@ tf_qcs_matrix* qcs_create_bit_phase_flip_operator_for_qudit(int m, int d, tf_qcs
 
 /* fully correlated phase flip for qubit */
 
-tf_qcs_matrix* qcs_create_fully_correlated_phase_flip_operator_for_qubit_register(int m, int q, tf_qcs_real_number p);
+//tf_qcs_matrix* qcs_create_fully_correlated_phase_flip_operator_for_qubit_register(int m, int q, tf_qcs_real_number p);
 
 /* four dimensional matrix of any size which contains complex numbers */
 

@@ -1,9 +1,12 @@
 /***************************************************************************
- *   Copyright (C) 2005 -- 2010 by Marek Sawerwain                         *
+ *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
  *                                         <M.Sawerwain@gmail.com>         *
+ *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
+ *   Copyright (C) 2005 -- 2016 by Marek Sawerwain                         *
+ *                                         <M.Sawerwain@gmail.com>         *
  *   Part of the Quantum Computing Simulator:                              *
- *   http://code.google.com/p/qcs                                          *
+ *   https://github.com/qMSUZ/QCS                                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,27 +24,40 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef __qcs_h__
-#define __qcs_h__
+#ifndef  __qcs_quantum_register_h__
+#define  __qcs_quantum_register_h__
 
-#define QCS_VERSION "0.2.30"
-#define QCS_RELEASE_NAME "symbolic yellow submarine" // next release name "tomato soup"
+#include "qcs_complex.h"
+#include "qcs_matrix.h"
 
-#include "qcs_misc.h"
-//#include "qcs_info.h"
-//#include "qcs_hash_table.h"
-//#include "qcs_complex.h"
-//#include "qcs_vector.h"
-//#include "qcs_matrix.h"
-//#include "qcs_qubit.h"
-//#include "qcs_qudit.h"
-#include "qcs_quantum_register.h"
-//#include "qcs_qubit_gates.h"
-//#include "qcs_qudit_gates.h"
-#include "qcs_rand.h"
-//#include "qcs_chp.h"
-//#include "qcs_interp.h"
-//#include "qcs_qwalk_1d.h"
-//#include "qcs_qwalk_2d.h"
+#define USE_STATE_VECTOR_QUBIT 2001
+#define USE_STATE_VECTOR_QUDIT 2002
+#define USE_DENSITY_MATRIX     2003
+#define USE_GRAPH_STATE_DESC   2004
 
-#endif /* __qcs_h__ */
+#define USE_SYMBOLIC_STATE_VECTOR_QUBIT 3000
+#define USE_SYMBOLIC_STATE_VECTOR_QUDIT 3001
+
+typedef struct {
+    int n,    // size of quantum registe in qubits/qudits
+	fdl,  // freedomlevel, default value is 2 for qubits 
+	mode, // mode of quantum register qubit,qudit
+	el;   // error level
+
+	Complex *vs; // vector state
+} QuantumRegister;
+
+typedef QuantumRegister  tf_qcs_quantum_register;
+typedef QuantumRegister* pf_qcs_quantum_register;
+
+
+
+tf_qcs_quantum_register* qcs_new_quantum_register(int size);
+void qcs_quantum_register_reset(tf_qcs_quantum_register *q_reg);
+void qcs_quantum_register_print_bin(tf_qcs_quantum_register *q_reg);
+void qcs_quantum_register_print_bin_full(tf_qcs_quantum_register *q_reg);
+
+void qcs_quantum_register_pauli_x(tf_qcs_quantum_register *q_reg, int i);
+
+
+#endif /* __qcs_quantum_register_h__ */

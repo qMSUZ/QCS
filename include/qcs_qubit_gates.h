@@ -197,8 +197,13 @@ tf_qcs_matrix *create_xy_spins_hamiltonian_with_jn_for_qudit(int n,int freedom_l
 
 tf_qcs_matrix *qcs_create_matrix_of_unitary_operation_of_xy_spin_perfect_transfer(int n, tf_qcs_real_number t);
 tf_qcs_matrix *qcs_create_matrix_of_unitary_operation_of_xy_spin_perfect_transfer_float_arg(int n, float t);
+
+void qcs_build_qubit_gates_matrix();
+void qcs_destroy_qubit_gates_matrix();
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __qcs_qubit_gates_h__ */
+
