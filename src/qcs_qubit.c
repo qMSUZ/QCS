@@ -26,6 +26,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef PYTHON_SCRIPT
+#include <Python.h>
+#endif
+
+
 #ifdef __qcs_core_library_debug_mode__
 #define MEMWATCH
 #define MEMWATCH_STDIO

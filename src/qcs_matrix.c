@@ -1,8 +1,12 @@
 /***************************************************************************
- *   Copyright (C) 2005 -- 2011 by Marek Sawerwain                         *
+ *   Copyright (C) 2019 by Marek Sawerwain                                 *
  *                                         <M.Sawerwain@gmail.com>         *
- *   Copyright (C) 2007 -- 2008 by Przemys≥aw Ratajczak                    *
- *   Copyright (C) 2005 -- 2006 by Kamil Paw≥owski                         *
+ *                                         <M.Sawerwain@issi.uz.zgora.pl   *
+ *                                                                         *
+ *   Copyright (C) 2005 -- 2012 by Marek Sawerwain                         *
+ *                                         <M.Sawerwain@gmail.com>         *
+ *   Copyright (C) 2007 -- 2008 by Przemys≈Çaw Ratajczak                    *
+ *   Copyright (C) 2005 -- 2006 by Kamil Paw≈Çowski                         *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
  *   http://code.google.com/p/qcs                                          *
@@ -36,6 +40,10 @@
 #define MEMWATCH
 #define MEMWATCH_STDIO
 //#include "memwatch/memwatch.h"
+#endif
+
+#ifdef PYTHON_SCRIPT
+#include <Python.h>
 #endif
 
 #include "qcs.h"
@@ -318,7 +326,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_hermitian_random_real_matrix(in
     return tmp_out;
 }
 
-tf_qcs_matrix *qcs_create_hermitian_random_matrix(int size)
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_hermitian_random_matrix(int size)
 {
     tf_qcs_matrix *tmp1 = qcs_create_matrix(size, size);
     tf_qcs_matrix *tmp2 = qcs_create_matrix(size, size);
@@ -336,6 +344,120 @@ tf_qcs_matrix *qcs_create_hermitian_random_matrix(int size)
 
     return tmp_out;
 }
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_arange_operation(tf_qcs_real_number _start, tf_qcs_real_number _end, tf_qcs_real_number _step)
+{
+    tf_qcs_matrix *m;
+    int n_count = ceil ((_end - _start) / _step) ;
+    int idx = 0;
+
+#if 0
+    printf("qcs_create_matrix_arange_operation:\n");
+    printf("\t n_count = %d\n", n_count);
+#endif
+
+    m = qcs_create_matrix(1, n_count);
+
+    tf_qcs_real_number v = _start;
+    while( v < _end )
+    {
+        qcs_set_cell_at_matrix_direct( m, 0, idx, v, 0);
+        v = v + _step;
+        idx++;
+    }
+
+    return m;
+}
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_linspace_operation_with_endpoint(tf_qcs_real_number _start, tf_qcs_real_number _end, int _n_count)
+{
+    tf_qcs_matrix *m;
+    tf_qcs_real_number _step = (_end - _start) / (_n_count-1)*1.0;
+    int idx=0;
+
+    m = qcs_create_matrix(1, _n_count);
+
+    tf_qcs_real_number v = 0.0f;
+    while( idx < _n_count )
+    {
+        qcs_set_cell_at_matrix_direct( m, 0, idx, (v * _step) + _start, 0);
+        v = v + 1.0;
+        idx++;
+    }
+
+    return m;
+}
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_linspace_operation_without_endpoint(tf_qcs_real_number _start, tf_qcs_real_number _end, int _n_count)
+{
+    tf_qcs_matrix *m;
+    tf_qcs_real_number _step = (_end - _start) / (_n_count)*1.0;
+    int idx=0;
+
+    m = qcs_create_matrix(1, _n_count);
+
+    tf_qcs_real_number v = 0.0f;
+    while( idx < _n_count )
+    {
+        qcs_set_cell_at_matrix_direct( m, 0, idx, (v * _step) + _start, 0);
+        v = v + 1.0;
+        idx++;
+    }
+
+    return m;
+}
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_arange_operation_with_float_args(float _start, float _end, float _step)
+{
+    return qcs_create_matrix_arange_operation( (tf_qcs_real_number)_start, (tf_qcs_real_number)_end, (tf_qcs_real_number)_step);
+}
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_linspace_operation_with_endpoint_with_float_args(float _start, float _end, int _n_count)
+{
+    return qcs_create_matrix_linspace_operation_with_endpoint( (tf_qcs_real_number)_start, (tf_qcs_real_number)_end, _n_count);
+}
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_linspace_operation_without_endpoint_with_float_args(float _start, float _end, int _n_count)
+{
+    return qcs_create_matrix_linspace_operation_without_endpoint( (tf_qcs_real_number)_start, (tf_qcs_real_number)_end, _n_count);
+}
+
+tf_qcs_matrix *qcs_create_create_operator(int N)
+{
+    int i,j;
+    tf_qcs_matrix *m;
+
+    m = qcs_create_matrix(N, N);
+
+    i=0;
+    for(j=1;j<m->cols;j++)
+    {
+            (m->m+i+(j*m->cols))->re = sqrt((double)j);
+            (m->m+i+(j*m->cols))->im = 0;
+            i++;
+    }
+
+    return m;
+}
+
+tf_qcs_matrix *qcs_create_destroy_operator(int N)
+{
+    int i,j;
+    tf_qcs_matrix *m;
+
+    m = qcs_create_matrix(N, N);
+
+    i=0;
+    for(j=1;j<m->cols;j++)
+    {
+            (m->m+j+(i*m->cols))->re = sqrt((double)j);
+            (m->m+j+(i*m->cols))->im = 0;
+            i++;
+    }
+
+    return m;
+}
+
 
 DYNAMIC_LIB_DECORATION void qcs_delete_matrix(tf_qcs_matrix *a_out)
 {
@@ -438,7 +560,7 @@ DYNAMIC_LIB_DECORATION void qcs_zero_matrix(tf_qcs_matrix *a_in)
 
 DYNAMIC_LIB_DECORATION void qcs_fill_matrix(tf_qcs_matrix *a_in)
 {
-     int i,j;
+     int i,j,c=1;
 
      for(i=0;i<a_in->rows;i++)
      {
@@ -446,8 +568,14 @@ DYNAMIC_LIB_DECORATION void qcs_fill_matrix(tf_qcs_matrix *a_in)
          {
 //             (a_in->m+j+(i*a_in->cols))->re=10+(1+j+(i)*10);
 //             (a_in->m+j+(i*a_in->cols))->im=0;
-             (a_in->m+j+(i*a_in->cols))->re=i+1;
-             (a_in->m+j+(i*a_in->cols))->im=j+1;
+
+//             (a_in->m+j+(i*a_in->cols))->re=i+1;
+//             (a_in->m+j+(i*a_in->cols))->im=j+1;
+
+             (a_in->m+j+(i*a_in->cols))->re=c+10;
+             (a_in->m+j+(i*a_in->cols))->im=0;
+
+             c++;
          }
      }
 }
@@ -759,6 +887,7 @@ DYNAMIC_LIB_DECORATION void qcs_div_scalar_matrix(tf_qcs_matrix *a_in, tf_qcs_co
      }
 }
 
+#if 0
 extern void cgetrf_(int* M, int *N, Complex* A, int* LDA, int* IPIV, int* INFO);
 
 int cgetrf(int M, int N, Complex* A, int LDA, int* IPIV)
@@ -780,6 +909,7 @@ int cgetri(int N, Complex *A, int LDA, int *IPIV, Complex *WORK, int LWORK)
 
     return INFO;
 }
+#endif
 
 DYNAMIC_LIB_DECORATION void qcs_inv_matrix(tf_qcs_matrix *a_in)
 {
@@ -799,14 +929,57 @@ DYNAMIC_LIB_DECORATION void qcs_inv_matrix(tf_qcs_matrix *a_in)
 
     A = a_in->m;
 
-    info = cgetrf(N, N, A, N, IPIV );
+    //info = cgetrf(N, N, A, N, IPIV );
     //printf("cgetrf: info %d\n", info);
 
-    info = cgetri(N, A, LDA, IPIV, WORK, LWORK );
+    //info = cgetri(N, A, LDA, IPIV, WORK, LWORK );
     //printf("cgetri: info %d\n", info);
 
     free(WORK);
     free(IPIV);
+}
+
+DYNAMIC_LIB_DECORATION void qcs_inv_2x2_matrix(tf_qcs_matrix *a_in)
+{
+    tf_qcs_matrix *invm;
+    tf_qcs_complex a,b,c,d, ad, bc, adbc, one, r;
+
+    one.re = 1.0;
+    one.im = 0.0;
+
+    a = *qcs_get_cell_at_matrix_complex(a_in, 0, 0);
+    b = *qcs_get_cell_at_matrix_complex(a_in, 0, 1);
+    c = *qcs_get_cell_at_matrix_complex(a_in, 1, 0);
+    d = *qcs_get_cell_at_matrix_complex(a_in, 1, 1);
+
+    qcs_complex_mul(&a, &d, &ad);
+    qcs_complex_mul(&b, &c, &bc);
+    qcs_complex_sub(&ad, &bc, &adbc);
+
+    qcs_complex_div(&one, &adbc, &r);
+
+    invm = qcs_create_matrix(2, 2);
+
+    b.re=-1.0f * b.re;
+    b.im=-1.0f * b.im;
+
+    c.re=-1.0f * c.re;
+    c.im=-1.0f * c.im;
+
+    qcs_set_cell_at_matrix_complex(invm, 0, 0, &d);
+    qcs_set_cell_at_matrix_complex(invm, 0, 1, &b);
+    qcs_set_cell_at_matrix_complex(invm, 1, 0, &c);
+    qcs_set_cell_at_matrix_complex(invm, 1, 1, &a);
+
+    qcs_scalar_mul_matrix(invm, &r);
+
+    qcs_set_cell_at_matrix_complex(a_in, 0, 0, qcs_get_cell_at_matrix_complex(invm, 0, 0));
+    qcs_set_cell_at_matrix_complex(a_in, 0, 1, qcs_get_cell_at_matrix_complex(invm, 0, 1));
+    qcs_set_cell_at_matrix_complex(a_in, 1, 0, qcs_get_cell_at_matrix_complex(invm, 1, 0));
+    qcs_set_cell_at_matrix_complex(a_in, 1, 1, qcs_get_cell_at_matrix_complex(invm, 1, 1));
+
+
+    qcs_delete_matrix( invm );
 }
 
 DYNAMIC_LIB_DECORATION tf_qcs_complex qcs_calc_dot_of_vector(tf_qcs_matrix *vec_in)
@@ -1494,6 +1667,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_partial_trace_matrix_1_qudit(tf
 
 /* --------------------------------------------------------------------- */
 
+#if 0
 extern void cheev_ (char *JOBZ, char *UPLO, int *N, tf_qcs_complex *A, int *LDA, tf_qcs_real_number *W, tf_qcs_complex *WORK, int *LWORK, tf_qcs_real_number *RWORK, int *INFO);
 
 int cheev ( char JOBZ, char UPLO, int N, tf_qcs_complex *A, int LDA, tf_qcs_real_number *W, tf_qcs_complex *WORK, int LWORK, tf_qcs_real_number *RWORK)
@@ -1517,6 +1691,7 @@ int cgesvd ( char JOBU, char JOBVT, int M, int N, tf_qcs_complex *A, int LDA, tf
 
   return INFO;
 }
+#endif // 0
 
 DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_mat, tf_qcs_matrix *eigenvalues, tf_qcs_matrix *eigenvectors)
 {
@@ -1537,7 +1712,7 @@ DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_ma
     A=eigenvectors->m;
 
     info=0;
-    info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     qcs_transpose_matrix(eigenvectors);
     //qcs_print_matrix( eigenvectors );
@@ -1581,7 +1756,7 @@ DYNAMIC_LIB_DECORATION void qcs_svd_decompose_of_matrix(tf_qcs_matrix *state, tf
 
     RWORK = malloc(5*qcs_min(m,n)*sizeof(tf_qcs_real_number)); memset(RWORK, 0, 5*qcs_min(m,n)*sizeof(tf_qcs_real_number));
 
-    info = cgesvd( 'A', 'A', m, n, A, lda, S, U, ldu, VT, ldvt, WORK, lwork, RWORK);
+    //info = cgesvd( 'A', 'A', m, n, A, lda, S, U, ldu, VT, ldvt, WORK, lwork, RWORK);
 
     //printf("Info = %d\nSchmidt coff:\n", info);
     //for(i=0;i<qcs_min(m,n);i++) printf("-> %f\n", *(S+i));
@@ -1641,7 +1816,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_square_root_of_operator_matrix(tf_qcs_
     A=a_mat->m;
 
     info=0;
-    info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     diag=qcs_create_matrix(a_mat->rows, a_mat->cols);
 
@@ -1896,7 +2071,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_real_number qcs_entropy_of_matrix(tf_qcs_matrix *a
 	A=a->m;
 
     info=0;
-    info=cheev('N', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('N', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     entropy=0;
     for(i=0;i<N;i++)
@@ -1937,7 +2112,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_real_number qcs_negativity_of_matrix(tf_qcs_matrix
 	A=a->m;
 
     info=0;
-    info=cheev('N', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('N', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     negativity=0;
     for(i=0;i<N;i++)
@@ -2275,7 +2450,7 @@ DYNAMIC_LIB_DECORATION void qcs_print_eigenvalue_of_matrix(tf_qcs_matrix *a)
 	A=a->m;
 
     info=0;
-    info=cheev('N', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('N', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     for(i=0;i<N;i++)
 	{
@@ -2308,7 +2483,7 @@ DYNAMIC_LIB_DECORATION void qcs_make_eigenvectors_of_matrix(tf_qcs_matrix *a)
 	A=a->m;
 
     info=0;
-    info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
 	free(RWORK);
 	free(WORK);
@@ -3371,6 +3546,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_phase_flip_operator_for_qubit(i
     return mat;
 }
 
+#if 0
 DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_phase_flip_operator_for_qudit(int m, int d, tf_qcs_real_number p)
 {
     tf_qcs_complex pp;
@@ -3388,6 +3564,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_phase_flip_operator_for_qudit(i
 
     return out_mat;
 }
+#endif
 
 DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_bit_flip_operator_for_qubit(int m, tf_qcs_real_number p)
 {
@@ -3466,6 +3643,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_bit_phase_flip_operator_for_qud
 
 /* fully correlated phase flip for qubit */
 
+#if 0
 DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_fully_correlated_phase_flip_operator_for_qubit_register(int m, int q, tf_qcs_real_number p)
 {
     int i;
@@ -3503,7 +3681,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_fully_correlated_phase_flip_ope
 
     return mat;
 }
-
+#endif
 
 /* four dimensional matrix of any size which contains complex numbers */
 

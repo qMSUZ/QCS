@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 -- 2010 by Marek Sawerwain                         *
  *                                         <M.Sawerwain@gmail.com>         *
- *   Copyright (C) 2005 -- 2006 by Kamil Paw³owski                         *
+ *   Copyright (C) 2005 -- 2006 by Kamil Pawłowski                         *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
  *   http://code.google.com/p/qcs                                          *
@@ -31,6 +31,11 @@
 //#include "memwatch/memwatch.h"
 #endif
 
+#ifdef PYTHON_SCRIPT
+#include <Python.h>
+#endif
+
+
 #include "qcs.h"
 #include "qcs_complex.h"
 #include "qcs_misc.h"
@@ -39,7 +44,7 @@ const tf_qcs_complex z0 = {0, 0};
 const tf_qcs_complex z1 = {1, 0};
 const tf_qcs_complex zj = {0, 1};
 
-DYNAMIC_LIB_DECORATION tf_qcs_complex *qcs_create_complex_float_arg(float a, float b)
+DYNAMIC_LIB_DECORATION tf_qcs_complex *qcs_create_complex_float_arg(tf_qcs_real_number a, tf_qcs_real_number b)
 {
     return qcs_create_complex( (tf_qcs_real_number)a, (tf_qcs_real_number)b );
 }
@@ -55,7 +60,6 @@ DYNAMIC_LIB_DECORATION tf_qcs_complex *qcs_create_complex(tf_qcs_real_number a, 
 
     return n;
 }
-
 
 /* Complex addition */
 DYNAMIC_LIB_DECORATION void qcs_complex_add(tf_qcs_complex *a_in, tf_qcs_complex *b_in, tf_qcs_complex *c_out)
@@ -165,7 +169,7 @@ DYNAMIC_LIB_DECORATION void qcs_exp_complex(tf_qcs_complex *a_in, tf_qcs_complex
 /* Modulo of Complex */
 DYNAMIC_LIB_DECORATION void qcs_mod_complex(tf_qcs_complex *a_in, tf_qcs_real_number *b_out)
 {
-    *b_out = sqrt(qcs_sqr(a_in->re) + qcs_sqr(a_in->im));
+    *b_out = (tf_qcs_real_number)sqrt(qcs_sqr(a_in->re) + qcs_sqr(a_in->im));
 }
 
 /* square root of complex */

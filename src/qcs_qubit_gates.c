@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 -- 2011 by Marek Sawerwain                         *
+ *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
  *                                         <M.Sawerwain@gmail.com>         *
+ *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
  *   http://code.google.com/p/qcs                                          *
@@ -22,6 +23,7 @@
  ***************************************************************************/
 
 #include <math.h>
+#include <string.h>
 
 #ifdef __qcs_core_library_debug_mode__
 #define MEMWATCH
@@ -927,7 +929,7 @@ DYNAMIC_LIB_DECORATION void qcs_1q_arbitrary_gate(tf_qcs_matrix *matrix, tf_qcs_
 
 DYNAMIC_LIB_DECORATION int qcs_2q_cnot_gate_pqc(tf_qcs_qubit *in_qubit_1, tf_qcs_qubit *in_qubit_2, tf_qcs_qubit *out_qubit_1, tf_qcs_qubit *out_qubit_2)
 {
-/* qubit a znajduje siê w stanie |1> wiec zmienamy stan qubitu b */
+/* qubit a znajduje siÃª w stanie |1> wiec zmienamy stan qubitu b */
 
      if(abs(in_qubit_1->beta.re)==1)
      {
@@ -947,7 +949,7 @@ DYNAMIC_LIB_DECORATION int qcs_2q_cnot_gate_pqc(tf_qcs_qubit *in_qubit_1, tf_qcs
         return 0;
      }
 
-/* qubit a znajduje siê w stanie |0> wiec nie zmienamy stanu qubitu b */
+/* qubit a znajduje siÃª w stanie |0> wiec nie zmienamy stanu qubitu b */
 
      if(in_qubit_1->alpha.re==1)
      {
@@ -967,7 +969,7 @@ DYNAMIC_LIB_DECORATION int qcs_2q_cnot_gate_pqc(tf_qcs_qubit *in_qubit_1, tf_qcs
         return 0;
      }
 
-/* qubit a nie znajduje siê w stanie bazowym */
+/* qubit a nie znajduje siÃª w stanie bazowym */
 /* wprowadzenie splatania nie powinno wystepowac w trybie pqc  */
 
 //     printf("|others>\n");
@@ -1014,7 +1016,7 @@ DYNAMIC_LIB_DECORATION int qcs_3q_cnot_gate_pqc(tf_qcs_qubit *in_qubit_1, tf_qcs
         return 0;
      }
 
-/* qubit a nie znajduje siê w stanie bazowym */
+/* qubit a nie znajduje siÃª w stanie bazowym */
 /* wprowadzenie splatania nalezy dopracowac  */
 
 //     printf("|others>\n");
@@ -1061,7 +1063,7 @@ DYNAMIC_LIB_DECORATION int qcs_4q_cnot_gate_pqc(tf_qcs_qubit *in_qubit_1, tf_qcs
         return 0;
      }
 
-/* qubit a nie znajduje siê w stanie bazowym */
+/* qubit a nie znajduje siÃª w stanie bazowym */
 /* wprowadzenie splatania nalezy dopracowac  */
 
 //     printf("|others>\n");
@@ -1410,20 +1412,20 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *two_qubit_syntesis_u_matrix_one_control_on
     tf_qcs_matrix *u=NULL;
 
     int i,j,
-//         n=3,  // iloœæ linii w uk³adzie
+//         n=3,  // iloÅ“Ã¦ linii w ukÅ‚adzie
 //         c=1,  // linia kontrolujaca
 //         t=2,  // linia kontrolowana
     step, minimatrix;
 
     char bins[128];
 
-    c1++; // dwie poprawki na numery qubitów
+    c1++; // dwie poprawki na numery qubitÃ³w
     t++;
 
 //     printf("c1=%d t=%d\n", c1, t);
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n)*0.25; // iloœæ ma³ych macierzy dla przypadku dwuqubitowej bramki cnot ()
+    minimatrix=pow(2,n)*0.25; // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku dwuqubitowej bramki cnot ()
 
 //     printf("\nstep=%d\nminimatrix=%d\n", step,minimatrix);
 //     printf("\ncontrol=%d\ntarget=%d\n", c, t);
@@ -1461,7 +1463,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *three_qubit_syntesis_u_matrix_two_control_
     tf_qcs_matrix *u=NULL;
 
     int i,j,
-//         n=4,  // iloœæ linii w uk³adzie
+//         n=4,  // iloÅ“Ã¦ linii w ukÂ³adzie
 //        c1=1,  // pierwsza linia kontrolujaca
 //        c2=2,  // druga linia kontrolujaca
 //         t=3,  // linia kontrolowana
@@ -1469,13 +1471,13 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *three_qubit_syntesis_u_matrix_two_control_
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     t++;
 
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n)*0.125; // iloœæ ma³ych macierzy dla przypadku trzyqubitowej bramki cnot
+    minimatrix=pow(2,n)*0.125; // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku trzyqubitowej bramki cnot
 
 //     printf("\nstep=%d\nminimatrix=%d\n", step,minimatrix);
 //     printf("\ncontrol=%d\ntarget=%d\n", c, t);
@@ -1517,14 +1519,14 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *four_qubit_syntesis_u_matrix_three_control
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     c3++;
     t++;
 
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n-3); // iloœæ ma³ych macierzy dla przypadku czteroqubitowej bramki cnot
+    minimatrix=pow(2,n-3); // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku czteroqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1558,7 +1560,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *five_qubit_syntesis_u_matrix_four_control_
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     c3++;
     c4++;
@@ -1566,7 +1568,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *five_qubit_syntesis_u_matrix_four_control_
 
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n-4); // iloœæ ma³ych macierzy dla przypadku piêcoqubitowej bramki cnot
+    minimatrix=pow(2,n-4); // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku piÃªcoqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1600,7 +1602,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *six_qubit_syntesis_u_matrix_five_control_o
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     c3++;
     c4++;
@@ -1608,7 +1610,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *six_qubit_syntesis_u_matrix_five_control_o
     t++;
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n-5); // iloœæ ma³ych macierzy dla przypadku szeœcioqubitowej bramki cnot
+    minimatrix=pow(2,n-5); // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku szeÅ“cioqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1644,11 +1646,11 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *two_qubit_syntesis_u_matrix_one_control_on
 
     char bins[128];
 
-    c1++; // dwie poprawki na numery qubitów
+    c1++; // dwie poprawki na numery qubitÃ³w
     t++;
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n)*0.25; // iloœæ ma³ych macierzy dla przypadku dwuqubitowej bramki cnot ()
+    minimatrix=pow(2,n)*0.25; // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku dwuqubitowej bramki cnot ()
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1682,13 +1684,13 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *three_qubit_syntesis_u_matrix_two_control_
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     t++;
 
 
     step=pow(2,n-t)-1; // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n)*0.125; // iloœæ ma³ych macierzy dla przypadku trzyqubitowej bramki cnot
+    minimatrix=pow(2,n)*0.125; // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku trzyqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1722,14 +1724,14 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *four_qubit_syntesis_u_matrix_three_control
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     c3++;
     t++;
 
 
     step=pow(2,n-t)-1;     // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n-3); // iloœæ ma³ych macierzy dla przypadku czteroqubitowej bramki cnot
+    minimatrix=pow(2,n-3); // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku czteroqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1763,14 +1765,14 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *five_qubit_syntesis_u_matrix_four_control_
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     c3++;
     c4++;
     t++;
 
     step=pow(2,n-t)-1;     // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n-4); // iloœæ ma³ych macierzy dla przypadku piêcoqubitowej bramki cnot
+    minimatrix=pow(2,n-4); // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku piÃªcoqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 
@@ -1804,7 +1806,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *six_qubit_syntesis_u_matrix_five_control_o
 
     char bins[128];
 
-    c1++; // poprawki na numery qubitów
+    c1++; // poprawki na numery qubitÃ³w
     c2++;
     c3++;
     c4++;
@@ -1812,7 +1814,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *six_qubit_syntesis_u_matrix_five_control_o
     t++;
 
     step=pow(2,n-t)-1;     // odstep pomiedzy elementami malych macierzy
-    minimatrix=pow(2,n-5); // iloœæ ma³ych macierzy dla przypadku szeœcioqubitowej bramki cnot
+    minimatrix=pow(2,n-5); // iloÅ“Ã¦ maÂ³ych macierzy dla przypadku szeÅ“cioqubitowej bramki cnot
 
     u=qcs_create_matrix(pow(2,n), pow(2,n));
 

@@ -24,6 +24,7 @@
 #include <time.h>
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 
 #include "qcs.h"
 #include "qcs_misc.h"
@@ -53,10 +54,10 @@ static void local_itoa(int value, char* str, int base)
     int sign;
 
     // Validate base
-    if (base<2 || base>35)
+    if (base < 2 || base > 35)
     {
-	*wstr='\0';
-	return;
+        *wstr='\0';
+        return;
     }
 
     // Take care of sign
@@ -316,7 +317,14 @@ DYNAMIC_LIB_DECORATION inline double get_elapsed_mcycles()
 {
     end = __rdtsc();
 
-    return (end-start) / (1024.0 * 1024.0);
+    return (end-start) / (1000.0 * 1000.0);
+}
+
+DYNAMIC_LIB_DECORATION inline double get_elapsed_cycles_raw()
+{
+        end = __rdtsc();
+
+    return (end-start);
 }
 
 DYNAMIC_LIB_DECORATION inline int CPUSupportsSSE2()

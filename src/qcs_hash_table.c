@@ -180,7 +180,7 @@ DYNAMIC_LIB_DECORATION void qcs_hash_table_basic_display(t_qcs_hash_table *hash_
 
 	for( n = 0 ; n < hash_tbl->size ; n++ )
 	{
-	    fprintf(f, "entry: %d [\n", n);
+	    fprintf(f, "entry: %ld [\n", n);
 		node = hash_tbl->nodes[n];
 		while(node)
 		{
