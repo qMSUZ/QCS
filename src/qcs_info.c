@@ -106,7 +106,7 @@ DYNAMIC_LIB_DECORATION void initialize_qcs_core_library()
     qcs_build_qubit_gates_matrix();
 
     no_state_vector_max_qubits=1000;
-    use_state_vector_max_qubits=15;
+    use_state_vector_max_qubits=32;
     use_graph_state_desc_max_qubits=50;
     pqc_mode_max_qubits=10000;
     chp_mode_max_qubits=10000;

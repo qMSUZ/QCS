@@ -104,6 +104,7 @@ double qcs_diffclock(clock_t clock1, clock_t clock2);
 void reset_and_start_timer();
 double get_elapsed_mcycles();
 double get_elapsed_cycles_raw();
+
 int CPUSupportsSSE2();
 int CPUSupportsSSE4();
 int CPUSupportsAVX();

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
+ *   Copyright (C) 2018, 2019, 2021 by Marek Sawerwain                     *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -35,45 +35,6 @@
 #include "qcs_quantum_register.h"
 #include "qcs_qubit_gates.h"
 
-DYNAMIC_LIB_DECORATION void qcs_quantum_register_reset(tf_qcs_quantum_register *q_reg)
-{
-    int i, vec_state_size;
-
-    vec_state_size = 1 << q_reg->n;
-
-    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
-    {
-        for (i=1;i<vec_state_size;i++)
-        {
-            q_reg->vs[i].re=0;
-            q_reg->vs[i].im=0;
-        }
-        q_reg->vs[0].re=1;
-        q_reg->vs[0].im=0;
-    }
-
-    /*
-    if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
-    {
-    }
-
-    if (q_reg->mode == USE_DENSITY_MATRIX)
-    {
-    }
-
-    if (q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUBIT)
-    {
-    }
-
-    if (q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUDIT)
-    {
-    }
-    */
-
-    q_reg->el = 0;
-}
-
-
 DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int size)
 {
     int i, vec_state_size;
@@ -82,7 +43,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int siz
     tmp = (tf_qcs_quantum_register*)malloc( sizeof(tf_qcs_quantum_register) );
 
     tmp->n = size;
-    vec_state_size = 1 << tmp->n;
+    tmp->vec_state_size = 1 << tmp->n;
 
     tmp->vs = (Complex*)malloc( sizeof(Complex) * (vec_state_size) );
 
@@ -99,6 +60,160 @@ DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int siz
     return tmp;
 }
 
+DYNAMIC_LIB_DECORATION void qcs_delete_quantum_register(tf_qcs_quantum_register *q_reg)
+{
+    int i;
+
+    if (q_reg->mode == USE_STATE_VECTOR_QUBIT)
+    {
+
+        if (q_reg->vs != NULL)
+        {
+            free((void*)(q_reg->vs));
+        }
+        q_reg->vs=NULL;
+    }
+
+    if (q_reg->mode == USE_CHP_MODE)
+    {
+    }
+
+    if (q_reg->mode == USE_ONEWAY_MODEL)
+    {
+    }
+
+    if(q_reg->mode == USE_DENSITY_MATRIX)
+    {
+    }
+
+    if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+    }
+
+
+    if ( q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUBIT )
+    {
+    }
+
+    if ( q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUDIT )
+    {
+    }
+
+
+    free((void*)q_reg);
+    q_reg=NULL;
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_reset(tf_qcs_quantum_register *q_reg)
+{
+    int i, vec_state_size;
+
+    q_reg->vec_state_size = 1 << q_reg->n;
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        for (i=1;i<q_reg->vec_state_size;i++)
+        {
+            q_reg->vs[i].re=0;
+            q_reg->vs[i].im=0;
+        }
+        q_reg->vs[0].re=1;
+        q_reg->vs[0].im=0;
+    }
+
+    
+    if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+	    // empty code
+    }
+
+    if (q_reg->mode == USE_DENSITY_MATRIX)
+    {
+	    // empty code
+    }
+
+    if (q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUBIT)
+    {
+	    // empty code
+    }
+
+    if (q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUDIT)
+    {
+	    // empty code
+    }
+    
+
+    q_reg->el = 0;
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_reset_error_level(tf_qcs_quantum_register *q_reg, int v)
+{
+    q_reg->el=0;
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_error_level(tf_qcs_quantum_register *q_reg, int v)
+{
+    q_reg->el=v;
+}
+
+DYNAMIC_LIB_DECORATION int qcs_quantum_register_get_error_level(tf_qcs_quantum_register *q_reg)
+{
+    return q_reg->el;
+}
+
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_state_dec(tf_qcs_quantum_register *q_reg, int n)
+{
+    int i;
+    char t[128];
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        t[0]=0;
+        qcs_dec2bin(n, q_reg->n, &t[0]);
+
+        if (q_reg->vs!=NULL)
+        {
+            for (i=0;i<(1 << q_reg->vec_state_size);i++)
+            {
+                q_reg->vs[i].re=0;
+                q_reg->vs[i].im=0;
+            }
+            q_reg->vs[n].re=1;
+            q_reg->vs[n].im=0;
+        }
+    }
+
+    if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+	    // empty code
+    }
+
+    if(q_reg->mode == USE_DENSITY_MATRIX)
+    {
+	    // empty code
+    }
+}
+
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_state_bin(tf_qcs_quantum_register *q_reg, char *state_desc)
+{
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        int v;
+
+        v=qcs_bin2dec(state_desc);
+        qcs_quantum_register_set_state_dec(q_reg, v);
+    }
+
+    if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+        //int v;
+
+        //v = qcs_base_d2dec(state_desc, q_reg->qudit_state->freedom_level);
+        //qcs_quantum_register_set_state_dec(q_reg, v);
+    }
+}
 
 
 static inline void oper_on_rows(tf_qcs_quantum_register *q_reg, int r1, int r2, tf_qcs_matrix *u)
@@ -196,7 +311,7 @@ DYNAMIC_LIB_DECORATION void applied_1q_gate_to_quantum_register ( tf_qcs_quantum
     }
 }
 
-DYNAMIC_LIB_DECORATION void qcs_quantum_register_pauli_x(tf_qcs_quantum_register *q_reg, int i)
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_pauli_x_gate(tf_qcs_quantum_register *q_reg, int i)
 {
     if ( q_reg->mode == USE_STATE_VECTOR_QUBIT )
     {
@@ -208,13 +323,6 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin(tf_qcs_quantum_regist
 {
     int i, max_value;
     char msg[512];
-
-/*
-    if ( q_reg->mode == USE_STATE_VECTOR_QUDIT)
-    {
-        qcs_quantum_reg_print_d_base( q_reg );
-    }
-*/
 
     if ( q_reg->mode == USE_STATE_VECTOR_QUBIT)
     {
@@ -234,6 +342,13 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin(tf_qcs_quantum_regist
             }
         }
     } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT)
+
+
+    if ( q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+        // qcs_quantum_reg_print_d_base( q_reg );
+    }
+
 
 /*
     if( q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUBIT )
@@ -283,4 +398,34 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin_full(tf_qcs_quantum_r
         //qcs_quantum_symbolic_reg_print_bin_full( q_reg->qubit_symbolic_state );
     }
 */
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_dec(tf_qcs_quantum_register *q_reg)
+{
+    int i, max_value;
+
+    if ( q_reg->vs == NULL )
+    {
+#ifdef PYTHON_SCRIPT
+        PySys_WriteStdout("no state vec\n");
+#else
+        printf("no state vec\n");
+#endif
+    }
+
+    if ( q_reg->mode == USE_STATE_VECTOR_QUBIT)
+    {
+        max_value = 1 << q_reg->n;
+        for ( i = 0 ; i < max_value ; i++ )
+        {
+            if (q_reg->vs[i].re!=0 || q_reg->vs[i].im!=0)
+            {
+#ifdef PYTHON_SCRIPT
+                PySys_WriteStdout("%2.6f + %2.6fi |%d>\n", q_reg->vs[i].re, q_reg->vs[i].im, i);
+#else
+                printf("%2.6f + %2.6fi |%d>\n", q_reg->vs[i].re, q_reg->vs[i].im, i);
+#endif
+            }
+        }
+    } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT_QUBIT)
 }

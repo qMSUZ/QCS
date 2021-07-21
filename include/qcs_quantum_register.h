@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
+ *   Copyright (C) 2018, 2019, 2021 by Marek Sawerwain                     *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -34,12 +34,15 @@
 #define USE_STATE_VECTOR_QUDIT 2002
 #define USE_DENSITY_MATRIX     2003
 #define USE_GRAPH_STATE_DESC   2004
+#define USE_CHP_MODE		   2005	
+#define USE_ONEWAY_MODEL	   2006	
 
 #define USE_SYMBOLIC_STATE_VECTOR_QUBIT 3000
 #define USE_SYMBOLIC_STATE_VECTOR_QUDIT 3001
 
 typedef struct {
-    int n,    // size of quantum registe in qubits/qudits
+    int n,    // size of quantum register in qubits/qudits
+	vec_state_size,
 	fdl,  // freedomlevel, default value is 2 for qubits 
 	mode, // mode of quantum register qubit,qudit
 	el;   // error level
@@ -53,11 +56,25 @@ typedef QuantumRegister* pf_qcs_quantum_register;
 
 
 tf_qcs_quantum_register* qcs_new_quantum_register(int size);
+void qcs_delete_quantum_register(tf_qcs_quantum_register *q_reg);
+
+void qcs_quantum_register_reset_error_level(tf_qcs_quantum_register *q_reg, int v);
+void qcs_quantum_register_set_error_level(tf_qcs_quantum_register *q_reg, int v);
+int qcs_quantum_register_get_error_level(tf_qcs_quantum_register *q_reg);
+
 void qcs_quantum_register_reset(tf_qcs_quantum_register *q_reg);
+
+void qcs_quantum_register_set_state_dec(tf_qcs_quantum_register *q_reg, int n);
+void qcs_quantum_register_set_state_bin(tf_qcs_quantum_register *q_reg, char *state_desc);
+
 void qcs_quantum_register_print_bin(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_full(tf_qcs_quantum_register *q_reg);
 
-void qcs_quantum_register_pauli_x(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_print_dec(tf_qcs_quantum_register *q_reg);
+
+void qcs_quantum_register_pauli_x_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_pauli_y_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_pauli_z_gate(tf_qcs_quantum_register *q_reg, int i);
 
 
 #endif /* __qcs_quantum_register_h__ */
