@@ -95,13 +95,13 @@ DYNAMIC_LIB_DECORATION void info()
     printf("chp mode max qubits: %d\n",chp_mode_max_qubits);
 }
 
-DYNAMIC_LIB_DECORATION void initialize_qcs_core_library()
+DYNAMIC_LIB_DECORATION void qcs_core_library_initialization()
 {
     srand(time(NULL));
     rand();
     qcs_mt_init_by_int((unsigned)time(NULL));
 
-    RandomInitialise(1802,9373);
+    RandomInitialise(1802, 9373);
 
     qcs_build_qubit_gates_matrix();
 
@@ -112,7 +112,7 @@ DYNAMIC_LIB_DECORATION void initialize_qcs_core_library()
     chp_mode_max_qubits=10000;
 }
 
-DYNAMIC_LIB_DECORATION void deinitialize_qcs_core_library()
+DYNAMIC_LIB_DECORATION void qcs_core_library_deinitialization()
 {
     qcs_destroy_qubit_gates_matrix();
 

@@ -36,11 +36,13 @@
 #define USE_GRAPH_STATE_DESC   2004
 #define USE_CHP_MODE		   2005	
 #define USE_ONEWAY_MODEL	   2006	
+#define USE_PQC_MODE	  	   2007	
 
 #define USE_SYMBOLIC_STATE_VECTOR_QUBIT 3000
 #define USE_SYMBOLIC_STATE_VECTOR_QUDIT 3001
 
 typedef struct {
+
     int n,    // size of quantum register in qubits/qudits
 	vec_state_size,
 	fdl,  // freedomlevel, default value is 2 for qubits 
@@ -48,6 +50,7 @@ typedef struct {
 	el;   // error level
 
 	Complex *vs; // vector state
+
 } QuantumRegister;
 
 typedef QuantumRegister  tf_qcs_quantum_register;
@@ -70,11 +73,18 @@ void qcs_quantum_register_set_state_bin(tf_qcs_quantum_register *q_reg, char *st
 void qcs_quantum_register_print_bin(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_full(tf_qcs_quantum_register *q_reg);
 
+void qcs_quantum_register_print_bin_with_prefix(tf_qcs_quantum_register *q_reg, char *prefix);
+
 void qcs_quantum_register_print_dec(tf_qcs_quantum_register *q_reg);
 
 void qcs_quantum_register_pauli_x_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_pauli_y_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_pauli_z_gate(tf_qcs_quantum_register *q_reg, int i);
 
+void qcs_quantum_register_had_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_had_n_conj_gate(tf_qcs_quantum_register *q_reg, int i);
+
+void qcs_quantum_register_cnot(tf_qcs_quantum_register *q_reg, int c1, int t);
+void qcs_quantum_register_cnot_conj(tf_qcs_quantum_register *q_reg, int c1, int t);
 
 #endif /* __qcs_quantum_register_h__ */

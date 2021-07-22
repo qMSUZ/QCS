@@ -79,17 +79,64 @@ void qcs_quantum_reg_test1()
 	qcs_delete_quantum_register(r);
 }
 
+void qcs_quantum_reg_test2()
+{
+ 	int i;
+ 	pf_qcs_quantum_register r;
+
+ 	r=qcs_new_quantum_register(3);
+
+	for(i=0;i<3;i++)
+	{
+		qcs_quantum_register_reset(r);
+		printf("Initial state after reset:\n");
+		qcs_quantum_register_print_bin(r);
+
+		printf("After hadamard gate (qubit %d)):\n", i);
+		qcs_quantum_register_had_n_gate(r, i);
+		qcs_quantum_register_print_bin(r);
+	}
+
+ 	qcs_delete_quantum_register(r);
+}
+
+void qcs_quantum_reg_test3()
+{
+ 	int i;
+ 	pf_qcs_quantum_register r;
+
+ 	r=qcs_new_quantum_register(2);
+
+	qcs_quantum_register_reset(r);
+	qcs_quantum_register_had_n_gate(r, 0);
+	qcs_quantum_register_cnot(r, 0, 1);
+
+	printf("Bell state: 1/(√2) |00> + |11>:\n");
+	qcs_quantum_register_print_bin_with_prefix(r,"    "); // four additionall spaces
+
+ 	qcs_delete_quantum_register(r);
+}
+
+
 int main( int argc, char *argv[] )
 {
-	initialize_qcs_core_library ( );
+	qcs_core_library_initialization ( );
 
+#if 0
 	printf(": qcs_qubit_test1\n");
 	qcs_qubit_test1();
 
 	printf(": qcs_quantum_reg_test1\n");
 	qcs_quantum_reg_test1();
-	
-	deinitialize_qcs_core_library();
+
+	printf(": qcs_quantum_reg_test2\n");
+	qcs_quantum_reg_test2();
+#endif
+
+	printf(": qcs_quantum_reg_test3\n");
+	qcs_quantum_reg_test3();
+
+	qcs_core_library_deinitialization();
 
 	return 0;
 }

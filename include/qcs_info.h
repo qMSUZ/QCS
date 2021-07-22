@@ -44,8 +44,8 @@ char* compilator_name();
 
 void amplitude_display_format(int _amplitude_disp_type);
 void info();
-void initialize_qcs_core_library();
-void deinitialize_qcs_core_library();
+void qcs_core_library_initialization();
+void qcs_core_library_deinitialization();
 
 #ifdef __cplusplus
 }

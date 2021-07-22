@@ -1,15 +1,16 @@
 /***************************************************************************
  *   Copyright (C) 2019 by Marek Sawerwain                                 *
  *                                         <M.Sawerwain@gmail.com>         *
- *                                         <M.Sawerwain@issi.uz.zgora.pl   *
+ *                                         <M.Sawerwain@issi.uz.zgora.pl>  *
  *                                                                         *
  *   Copyright (C) 2005 -- 2012 by Marek Sawerwain                         *
  *                                         <M.Sawerwain@gmail.com>         *
+ *                                         <M.Sawerwain@issi.uz.zgora.pl>  *
  *   Copyright (C) 2007 -- 2008 by Przemysław Ratajczak                    *
  *   Copyright (C) 2005 -- 2006 by Kamil Pawłowski                         *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
- *   http://code.google.com/p/qcs                                          *
+ *   https://github.com/qMSUZ/QCS                                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
