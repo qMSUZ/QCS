@@ -66,11 +66,14 @@ library: $(C_OBJ_MAIN_SOURCES) $(CC_OBJ_MAIN_SOURCES)
 python_port: library qcs_wrap.o
 	$(CC) $(LIB_OPT) -shared qcs_wrap.o libqcs.a -o $(QCS_PYTHON_OUT) $(PYTHON_LIB) -llapack -lblas -lgfortran -lm
 
+ex-rand-test: examples_ansi_c/ex-rand-test.c library
+	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+
 ex1: examples_ansi_c/ex1.c library
 	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
 
 clean:
-	rm -f *.o src/qcs_wrap.c src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc ex1
+	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc ex1 ex-rand-test
 
 help:
 	@echo ".:             The Quantum Computing Simulator -- make build system             :."
