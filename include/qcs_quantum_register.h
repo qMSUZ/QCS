@@ -30,6 +30,8 @@
 #include "qcs_complex.h"
 #include "qcs_matrix.h"
 
+#define USE_NO_STATE_VECTOR    1001
+
 #define USE_STATE_VECTOR_QUBIT 2001
 #define USE_STATE_VECTOR_QUDIT 2002
 #define USE_DENSITY_MATRIX     2003
@@ -38,8 +40,8 @@
 #define USE_ONEWAY_MODEL	   2006	
 #define USE_PQC_MODE	  	   2007	
 
-#define USE_SYMBOLIC_STATE_VECTOR_QUBIT 3000
-#define USE_SYMBOLIC_STATE_VECTOR_QUDIT 3001
+#define USE_SYMBOLIC_STATE_VECTOR_QUBIT 3001
+#define USE_SYMBOLIC_STATE_VECTOR_QUDIT 3002
 
 typedef struct {
 
@@ -77,6 +79,9 @@ void qcs_quantum_register_print_bin_with_prefix(tf_qcs_quantum_register *q_reg, 
 
 void qcs_quantum_register_print_dec(tf_qcs_quantum_register *q_reg);
 
+void applied_1q_gate_to_quantum_register ( tf_qcs_quantum_register *q_reg, int t, tf_qcs_matrix *u);
+void applied_2q_gate_to_quantum_register_one_control(tf_qcs_quantum_register *q_reg, int c1, int t, tf_qcs_matrix *u);
+
 void qcs_quantum_register_pauli_x_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_pauli_y_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_pauli_z_gate(tf_qcs_quantum_register *q_reg, int i);
@@ -84,7 +89,35 @@ void qcs_quantum_register_pauli_z_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_had_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_had_n_conj_gate(tf_qcs_quantum_register *q_reg, int i);
 
+void qcs_quantum_register_square_root_not_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_x_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_y_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_z_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_mx_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_my_rot90_n(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_mz_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quantum_register *q_reg, tf_qcs_real_number k, int i);
+void qcs_quantum_register_rotate_theta_n_gate(tf_qcs_quantum_register *q_reg, tf_qcs_real_number theta, int i);
+void qcs_quantum_register_t_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_v_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_s_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_s_adj_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_phase_n_gate(tf_qcs_quantum_register *q_reg, int i);
+void qcs_quantum_register_phase_f_n_gate(tf_qcs_quantum_register *q_reg, int i);
+
+void qcs_qubit_arbitrary_one_qubit_gate(tf_qcs_quantum_register *q_reg, tf_qcs_matrix *gate, int i);
+void qcs_arbitrary_single_gate(tf_qcs_quantum_register *q_reg, tf_qcs_matrix *m, int i);
+
+
 void qcs_quantum_register_cnot(tf_qcs_quantum_register *q_reg, int c1, int t);
 void qcs_quantum_register_cnot_conj(tf_qcs_quantum_register *q_reg, int c1, int t);
+
+
+int qcs_quantum_register_measure_one_qubit(tf_qcs_quantum_register *q_reg, int k);
+int qcs_quantum_register_measure_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int k);
+int qcs_quantum_register_measure_one_qubit_in_std_base_force(tf_qcs_quantum_register *q_reg, int k, int force_result);
+
+void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int k, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1);
+
 
 #endif /* __qcs_quantum_register_h__ */

@@ -260,12 +260,17 @@ DYNAMIC_LIB_DECORATION int qcs_power_mod(int a, int k, int n)
 DYNAMIC_LIB_DECORATION int qcs_fast_power_mod(int b, int x, int m)
 {
 	int erg = 1;
-	while ( x > 0 )
+	
+    while ( x > 0 )
 	{
-		if ( x & 1 ) { erg = ( erg * b ) % m; }
+		if ( x & 1 ) 
+        {
+            erg = ( erg * b ) % m; 
+        }
 		b = ( b * b ) % m;
 		x = x >> 1;
 	}
+
 	return erg;
 }
 

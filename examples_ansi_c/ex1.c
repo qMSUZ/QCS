@@ -117,6 +117,25 @@ void qcs_quantum_reg_test3()
  	qcs_delete_quantum_register(r);
 }
 
+void qcs_quantum_reg_test4()
+{
+ 	int i;
+ 	pf_qcs_quantum_register r;
+
+ 	r=qcs_new_quantum_register(2);
+	qcs_quantum_register_reset(r);
+	
+	qcs_quantum_register_had_n_gate(r, 0);
+	qcs_quantum_register_print_bin_with_prefix(r, "    "); // four additionall spaces
+
+	i=qcs_quantum_register_measure_one_qubit(r, 0);
+	//     i=qcs_quantum_reg_measure_from_to(r,1,3);
+	printf("result of measure %d\n", i);
+	qcs_quantum_register_print_bin_with_prefix(r,"    "); // four additionall spaces
+
+ 	qcs_delete_quantum_register(r);
+
+}
 
 int main( int argc, char *argv[] )
 {
@@ -131,10 +150,13 @@ int main( int argc, char *argv[] )
 
 	printf(": qcs_quantum_reg_test2\n");
 	qcs_quantum_reg_test2();
-#endif
 
 	printf(": qcs_quantum_reg_test3\n");
 	qcs_quantum_reg_test3();
+#endif
+
+	printf(": qcs_quantum_reg_test4\n");
+	qcs_quantum_reg_test4();
 
 	qcs_core_library_deinitialization();
 
