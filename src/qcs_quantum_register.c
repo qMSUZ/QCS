@@ -454,6 +454,16 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_had_n_conj_gate(tf_qcs_quantum_
 
 }
 
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_had_gate_for_whole_register(tf_qcs_quantum_register *q_reg)
+{
+    int i;
+
+    for ( i=0 ; i<q_reg->n ; i++ )
+    {
+        qcs_quantum_register_had_n(q_reg, i);
+    }
+}
+
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_square_root_not_n_gate(tf_qcs_quantum_register *q_reg, int i)
 {
     char t[128];
@@ -1213,6 +1223,22 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_conj(tf_qcs_quantum_regist
     }
 }
 
+/**
+ * 
+ * multiqubit gates
+ * 
+ * 
+**/
+
+// TODO (marek#1#): finalise implementation
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_swap_gate(tf_qcs_quantum_register *q_reg, int a, int b)
+{
+}
+
+// TODO (marek#1#): finalise implementation
+DYNAMIC_LIB_DECORATION void qcs_quantum_reg_fredkin_gate(tf_qcs_quantum_register *q_reg, int a, int b, int c)
+{
+}
 
 /**
  * 
