@@ -460,7 +460,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_had_gate_for_whole_register(tf_
 
     for ( i=0 ; i<q_reg->n ; i++ )
     {
-        qcs_quantum_register_had_n(q_reg, i);
+        qcs_quantum_register_had_n_gate(q_reg, i);
     }
 }
 
