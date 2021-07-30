@@ -48,7 +48,8 @@ typedef struct {
     int n,    // size of quantum register in qubits/qudits
 	vec_state_size,
 	fdl,  // freedomlevel, default value is 2 for qubits 
-	mode, // mode of quantum register qubit,qudit
+	mode, // mode of quantum register e.g. for qubit, qudit, density matrix
+		  // multi qq (qubits and qudits)
 	el;   // error level
 
 	Complex *vs; // vector state
@@ -124,5 +125,6 @@ int qcs_quantum_register_measure_one_qubit_in_std_base_force(tf_qcs_quantum_regi
 
 void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int k, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1);
 
+tf_qcs_matrix* qcs_quantum_register_generate_density_matrix(tf_qcs_quantum_register *q_reg);
 
 #endif /* __qcs_quantum_register_h__ */

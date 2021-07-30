@@ -433,11 +433,11 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_for_ux_1q_gate(tf_qcs_re
 
 DYNAMIC_LIB_DECORATION void qcs_build_qubit_gates_matrix()
 {
-     zero_reset_gate=qcs_create_matrix(2,2);
-     id_gate=qcs_create_matrix(2,2);
-     not_gate=qcs_create_matrix(2,2);
-     pauli_x_gate=qcs_create_matrix(2,2);
-     pauli_y_gate=qcs_create_matrix(2,2);
+        zero_reset_gate = qcs_create_matrix(2,2);
+                id_gate = qcs_create_matrix(2,2);
+               not_gate = qcs_create_matrix(2,2);
+           pauli_x_gate = qcs_create_matrix(2,2);
+           pauli_y_gate = qcs_create_matrix(2,2);
      pauli_z_gate=qcs_create_matrix(2,2);
      hadamard_gate=qcs_create_matrix(2,2);
      square_root_gate=qcs_create_matrix(2,2);
@@ -562,7 +562,7 @@ DYNAMIC_LIB_DECORATION void qcs_build_qubit_gates_matrix()
 
 /* cache construction */
 
-    qudit_gates_cache = qcs_hash_table_create( 1024, NULL);
+   qudit_gates_cache = qcs_hash_table_create( 1024, NULL);
 }
 
 

@@ -28,7 +28,7 @@
 CC=gcc
 CXX=g++
 #CFLAGS=-fPIC -DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I./include
-CFLAGS=-fPIC $(PYTHON_CFLAGS) -I./include
+CFLAGS=-g $(PYTHON_CFLAGS) -I./include
 SWIGCMD=swig
 SWIGOPT=-DPYTHON_SCRIPT -python -I./include
 PYTHON_LIB=`pkg-config python3 --libs`
@@ -55,7 +55,7 @@ all: python_port
 qcs_wrap.o: src/qcs_wrap.c
 	$(CC) $(CFLAGS) -c $<
 
-qcs_wrap.c: src/qcs.i
+src/qcs_wrap.c: src/qcs.i
 	$(SWIGCMD) $(SWIGOPT) $<
 
 library: $(C_OBJ_MAIN_SOURCES) $(CC_OBJ_MAIN_SOURCES)
@@ -66,11 +66,14 @@ library: $(C_OBJ_MAIN_SOURCES) $(CC_OBJ_MAIN_SOURCES)
 python_port: library qcs_wrap.o
 	$(CC) $(LIB_OPT) -shared qcs_wrap.o libqcs.a -o $(QCS_PYTHON_OUT) $(PYTHON_LIB) -llapack -lblas -lgfortran -lm
 
+ex-spectral-decomposition-test: examples_ansi_c/ex-spectral-decomposition-test.c library
+	$(CC) -o ex-spectral-decomposition-test examples_ansi_c/ex-spectral-decomposition-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+
 ex-rand-test: examples_ansi_c/ex-rand-test.c library
-	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
 
 ex1: examples_ansi_c/ex1.c library
-	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
 
 clean:
 	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc ex1 ex-rand-test

@@ -65,14 +65,14 @@ int compare_tf_qcs_complex(const void *_a, const void *_b)
 
 DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix(int rows, int cols)
 {
-    tf_qcs_matrix *t;
+    tf_qcs_matrix *t = NULL;
 
-    t=(tf_qcs_matrix*)malloc(sizeof(tf_qcs_matrix));
+    t = (tf_qcs_matrix*)malloc(sizeof(tf_qcs_matrix));
 
-    t->rows=rows;
-    t->cols=cols;
+    t->rows = rows;
+    t->cols = cols;
 
-    t->m=(tf_qcs_complex*)malloc(sizeof(tf_qcs_complex)*rows*cols);
+    t->m = (tf_qcs_complex*)malloc(sizeof(tf_qcs_complex)*rows*cols);
 
     t->q = -1;
     t->freedom_level = -1;
@@ -1667,7 +1667,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_partial_trace_matrix_1_qudit(tf
 
 /* --------------------------------------------------------------------- */
 
-#if 0
+
 extern void cheev_ (char *JOBZ, char *UPLO, int *N, tf_qcs_complex *A, int *LDA, tf_qcs_real_number *W, tf_qcs_complex *WORK, int *LWORK, tf_qcs_real_number *RWORK, int *INFO);
 
 int cheev ( char JOBZ, char UPLO, int N, tf_qcs_complex *A, int LDA, tf_qcs_real_number *W, tf_qcs_complex *WORK, int LWORK, tf_qcs_real_number *RWORK)
@@ -1691,7 +1691,6 @@ int cgesvd ( char JOBU, char JOBVT, int M, int N, tf_qcs_complex *A, int LDA, tf
 
   return INFO;
 }
-#endif // 0
 
 DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_mat, tf_qcs_matrix *eigenvalues, tf_qcs_matrix *eigenvectors)
 {
@@ -1712,7 +1711,7 @@ DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_ma
     A=eigenvectors->m;
 
     info=0;
-    //info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     qcs_transpose_matrix(eigenvectors);
     //qcs_print_matrix( eigenvectors );
@@ -1722,7 +1721,10 @@ DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_ma
     eigenvalues->q=-1;
     eigenvalues->freedom_level=-1;
 
-    for(i=0;i<N;i++) qcs_set_cell_at_matrix_direct(eigenvalues, i, 0, *(W+i), 0);
+    for(i=0;i<N;i++)
+    {
+        qcs_set_cell_at_matrix_direct(eigenvalues, i, 0, *(W+i), 0);
+    }
 
     free(RWORK);
     free(WORK);
@@ -2504,8 +2506,8 @@ DYNAMIC_LIB_DECORATION void qcs_print_matrix(tf_qcs_matrix *a_in)
         for (j=0; j<a_in->cols; j++)
         {
             //qcs_print_complex(a_in->m+i*a_in->cols+j);
-            tf_qcs_real_number re=(a_in->m+i*a_in->cols+j)->re;
-            tf_qcs_real_number im=(a_in->m+i*a_in->cols+j)->im;
+            tf_qcs_real_number re=(a_in->m+(i*a_in->cols)+j)->re;
+            tf_qcs_real_number im=(a_in->m+(i*a_in->cols)+j)->im;
 #ifdef PYTHON_SCRIPT
             PySys_WriteStdout("(%3.3f+%3.3fi) ", re, im);
 #else

@@ -30,7 +30,7 @@
 
 
 //#define tf_qcs_real_number double
-typedef float tf_qcs_real_number ;
+typedef float tf_qcs_real_number;
 //typedef double tf_qcs_real_number ;
 
 #define QCS_ACCURACY -7

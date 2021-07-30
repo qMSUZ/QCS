@@ -37,7 +37,7 @@
 
 DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int size)
 {
-    int i, vec_state_size;
+    int i;
     tf_qcs_quantum_register* tmp;
 
     tmp = (tf_qcs_quantum_register*)malloc( sizeof(tf_qcs_quantum_register) );
@@ -45,12 +45,12 @@ DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int siz
     tmp->n = size;
     tmp->vec_state_size = 1 << tmp->n;
 
-    tmp->vs = (Complex*)malloc( sizeof(Complex) * (vec_state_size) );
+    tmp->vs = (tf_qcs_complex*)malloc( sizeof(tf_qcs_complex) * (tmp->vec_state_size) );
 
     for ( i = 0 ; i < (  tmp->vec_state_size ) ; i++)
     {
-        tmp->vs[i].re = 0;
-        tmp->vs[i].im = 0;
+        tmp->vs[i].re = (tf_qcs_real_number)0.0;
+        tmp->vs[i].im = (tf_qcs_real_number)0.0;
     }
 
     tmp->mode = USE_STATE_VECTOR_QUBIT;
@@ -105,19 +105,19 @@ DYNAMIC_LIB_DECORATION void qcs_delete_quantum_register(tf_qcs_quantum_register 
 
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_reset(tf_qcs_quantum_register *q_reg)
 {
-    int i, vec_state_size;
-
-    q_reg->vec_state_size = 1 << q_reg->n;
+    int i;
 
     if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
     {
-        for (i=1;i<q_reg->vec_state_size;i++)
+        for ( i = 1 ; i < (  q_reg->vec_state_size ) ; i++)
         {
-            q_reg->vs[i].re=0;
-            q_reg->vs[i].im=0;
+            q_reg->vs[i].re = (tf_qcs_real_number)0.0;
+            q_reg->vs[i].im = (tf_qcs_real_number)0.0;
         }
-        q_reg->vs[0].re=1;
-        q_reg->vs[0].im=0;
+        q_reg->vs[0].re = (tf_qcs_real_number)1.0;
+        q_reg->vs[0].im = (tf_qcs_real_number)0.0;
+
+        q_reg->el = 0;
     }
 
     
@@ -2009,4 +2009,66 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_dec(tf_qcs_quantum_regist
             }
         }
     } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT_QUBIT)
+}
+
+DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_quantum_register_generate_density_matrix(tf_qcs_quantum_register *q_reg)
+{
+    int x, y, max_value;
+    tf_qcs_complex a_tmp, b_tmp, out_tmp;
+    tf_qcs_matrix *d=NULL;
+
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        max_value=1 << q_reg->n;
+        d = qcs_create_matrix(max_value, max_value);
+        d->q = q_reg->n;
+        d->freedom_level = 2;
+
+        for (y=0;y<max_value;y++)
+        {
+            a_tmp.re = q_reg->vs[y].re;
+            a_tmp.im = q_reg->vs[y].im;
+            for (x=0;x<max_value;x++)
+            {
+                qcs_conj_complex(&q_reg->vs[x], &b_tmp);
+                qcs_complex_mul(&a_tmp, &b_tmp, &out_tmp);
+
+                qcs_set_cell_at_matrix_complex(d, x, y, &out_tmp);
+            }
+        }
+    } // if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+
+    if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+        /*
+        max_value=(int)powf(q_reg->qudit_state->freedom_level, q_reg->qudit_state->size);
+
+        d = qcs_create_matrix(max_value,max_value);
+        d->q = q_reg->qudit_state->size;
+        d->freedom_level = q_reg->qudit_state->freedom_level;
+
+        for (y=0;y<max_value;y++)
+        {
+            a_tmp.re = q_reg->qudit_state->vec_state[y].re;
+            a_tmp.im = q_reg->qudit_state->vec_state[y].im;
+            for (x=0;x<max_value;x++)
+            {
+                qcs_conj_complex(&q_reg->qudit_state->vec_state[x], &b_tmp);
+                qcs_complex_mul(&a_tmp, &b_tmp, &out_tmp);
+
+                qcs_set_cell_at_matrix_complex(d, x, y, &out_tmp);
+            }
+        }
+        */
+    } // if (q_reg->mode == USE_STATE_VECTOR_QUDIT)
+
+    if ( q_reg->mode == USE_DENSITY_MATRIX )
+    {
+        /*
+        d = qcs_clone_matrix(q_reg->dms->state);
+        */
+    }
+
+    return d;
 }

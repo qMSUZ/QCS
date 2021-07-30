@@ -121,6 +121,16 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	{
 	}
 
+	void HadAll()
+	{
+		
+	}
+
+    void SquareRootOfNot(int t)
+	{
+
+	}
+
 	void CNot(int c, int t)
 	{
 	}
