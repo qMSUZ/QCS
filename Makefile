@@ -27,8 +27,13 @@
 
 CC=gcc
 CXX=g++
-#CFLAGS=-fPIC -DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I./include
-CFLAGS=-g $(PYTHON_CFLAGS) -I./include
+
+ifeq ($(DEBUG),1)
+CFLAGS=-g -DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I./include
+else
+CFLAGS=-fPIC -DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I./include
+endif
+
 SWIGCMD=swig
 SWIGOPT=-DPYTHON_SCRIPT -python -I./include
 PYTHON_LIB=`pkg-config python3 --libs`
@@ -76,7 +81,7 @@ ex1: examples_ansi_c/ex1.c library
 	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
 
 clean:
-	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc ex1 ex-rand-test
+	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc ex1 ex-rand-test ex-spectral-decomposition-test
 
 help:
 	@echo ".:             The Quantum Computing Simulator -- make build system             :."

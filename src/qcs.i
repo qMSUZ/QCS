@@ -106,47 +106,62 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 
 	void X(int t)
 	{
-	    qcs_quantum_register_pauli_x_gate( $self, t);
+		qcs_quantum_register_pauli_x_gate( $self, t );
 	}
 
 	void Y(int t)
 	{
+		qcs_quantum_register_pauli_y_gate( $self, t );
 	}
 
 	void Z(int t)
 	{
+		qcs_quantum_register_pauli_z_gate( $self, t );
 	}
 
 	void Had(int t)
 	{
+		qcs_quantum_register_had_n_gate( $self, t );
 	}
 
 	void HadAll()
 	{
-		
+		qcs_quantum_register_had_gate_for_whole_register( $self );
 	}
 
     void SquareRootOfNot(int t)
 	{
-
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
 	}
 
 	void CNot(int c, int t)
 	{
+		qcs_quantum_register_cnot( $self, c, t);
 	}
 
 	int Measure()
 	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
 		return -1;
 	}
 
 	int M(int t)
 	{
-		return -1;
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	return -1;
 	}
 
 	int MeasureN(int _from, int _to)
 	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
 		return -1;
 	}
 
@@ -161,7 +176,7 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	void Pr()
 	{
 	    if( $self->mode == USE_STATE_VECTOR_QUBIT )
-		qcs_quantum_register_print_bin( $self );
+			qcs_quantum_register_print_bin( $self );
 	}
 
 	%feature("autodoc", "PrFull()");
