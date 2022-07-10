@@ -57,6 +57,8 @@ DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int siz
     tmp->fdl = 2;
     tmp->el = 0;
 
+    tmp->dim_of_qs = NULL;
+
     return tmp;
 }
 

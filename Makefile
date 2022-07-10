@@ -1,5 +1,5 @@
 #/***************************************************************************
-# *   Copyright (C) 2019, 2021 by Marek Sawerwain                           *
+# *   Copyright (C) 2019, 2021, 2022 by Marek Sawerwain                     *
 # *                                         <M.Sawerwain@gmail.com>         *
 # *                                         <M.Sawerwain@issi.uz.zgora.pl   *
 # *                                                                         *
@@ -28,11 +28,16 @@
 CC=gcc
 CXX=g++
 
-ifeq ($(DEBUG),1)
-CFLAGS=-g -DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I./include
+ifeq ($(DEBUG),1) 
+CFLAGS=-g -I./include 
 else
-CFLAGS=-fPIC -DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I./include
+CFLAGS=-I./include 
 endif
+
+ifeq ($(PYTHON),1)
+CFLAGS+=-DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I/opt/intel/oneapi/intelpython/python3.9/include/python3.9 -fPIC
+endif
+
 
 SWIGCMD=swig
 SWIGOPT=-DPYTHON_SCRIPT -python -I./include
@@ -54,7 +59,7 @@ C_MAIN_SOURCES = src/qcs_misc.c \
 C_OBJ_MAIN_SOURCES=$(C_MAIN_SOURCES:.c=.o)
 	
 
-all: python_port
+all: microex1
 
 
 qcs_wrap.o: src/qcs_wrap.c
@@ -70,27 +75,44 @@ library: $(C_OBJ_MAIN_SOURCES) $(CC_OBJ_MAIN_SOURCES)
 
 python_port: library qcs_wrap.o
 	$(CC) $(LIB_OPT) -shared qcs_wrap.o libqcs.a -o $(QCS_PYTHON_OUT) $(PYTHON_LIB) -llapack -lblas -lgfortran -lm
+	cp src/qcs.py qcs.py
 
 ex-spectral-decomposition-test: examples_ansi_c/ex-spectral-decomposition-test.c library
-	$(CC) -o ex-spectral-decomposition-test examples_ansi_c/ex-spectral-decomposition-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+	$(CC) -o ex-spectral-decomposition-test examples_ansi_c/ex-spectral-decomposition-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3 -llapack -lblas -lgfortran -lm
 
 ex-rand-test: examples_ansi_c/ex-rand-test.c library
 	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
 
-ex1: examples_ansi_c/ex1.c library
-	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+microex1: examples_ansi_c/microexamples.c library
+	$(CC) -D__microEX1__ -o microex1 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+
+microex2: examples_ansi_c/microexamples.c library
+	$(CC) -D__microEX2__ -o microex2 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+
+microex3: examples_ansi_c/microexamples.c library
+	$(CC) -D__microEX3__ -o microex3 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+
+microex4: examples_ansi_c/microexamples.c library
+	$(CC) -D__microEX4__ -o microex4 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+
 
 clean:
-	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc ex1 ex-rand-test ex-spectral-decomposition-test
+	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc \
+		microex1 microex2 microex3 microex4 \
+		ex-rand-test ex-spectral-decomposition-test
 
 help:
 	@echo ".:             The Quantum Computing Simulator -- make build system             :."
 	@echo "+--------------------------------------------------------------------------------+"
 	@echo "+ Basic examples:                                                                +"
 	@echo "+      \"make library\" for building static library using default configuration.   +"
-	@echo "+      \"make python_port\" for building the module for Python language            +"
+	@echo "+      \"make PYTHON=1 python_port\" for building the module for Python language   +"
 	@echo "+                                                                                +"
 	@echo "+ Default action:                                                                +"
-	@echo "+      \"python_port\" for building the module for Python language                 +"
+	@echo "+      \"microex1\" for building the micro example 1                               +"
 	@echo "+                                                                                +"
 	@echo "+--------------------------------------------------------------------------------+"

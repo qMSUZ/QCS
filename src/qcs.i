@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
+ *   Copyright (C) 2018, 2019 by Marek Sawerwain                            *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -40,7 +40,7 @@ computations routines for Python and other languages supported by SWIG."
 #include <stdarg.h>
 
 #ifdef PYTHON_SCRIPT
-#include <Python.h>
+#include "Python.h"
 #endif
 
 
@@ -67,7 +67,22 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 
 #ifdef PYTHON_SCRIPT
 %init %{
-    qcs_core_library_initialization();
+	PySys_WriteStdout(
+	"/---\\ /---\\ /---\\ \n"
+	"|   | |     | 		   Quantum\n"
+	"|   | |     \\---\\     Computing System\n"
+	"|   | |         | 	\n"
+	"\\-\\-/ \\---/ \\---/ \n"
+	"   \\\n"
+	);
+
+	PySys_WriteStdout("%s\n", version());
+	PySys_WriteStdout("%s\n", compile_system());
+	PySys_WriteStdout("%s\n", compilator_name());
+	qcs_core_library_initialization();
+	PySys_WriteStdout("+ qcs gate's cache initialised\n");
+	PySys_WriteStdout("+ QCS for Python interface version: %s\n", QCS_INTERFACE_VER);
+	PySys_WriteStdout("%s\n", _QCS_I_CompileSystem);
 %}
 #endif
 
@@ -120,6 +135,11 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	}
 
 	void Had(int t)
+	{
+		qcs_quantum_register_had_n_gate( $self, t );
+	}
+
+	void HadN(int t)
 	{
 		qcs_quantum_register_had_n_gate( $self, t );
 	}

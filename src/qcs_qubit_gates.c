@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
+ *   Copyright (C) 2018, 2019 by Marek Sawerwain                            *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *

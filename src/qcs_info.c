@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018,2019 by Marek Sawerwain                            *
+ *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                     *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -32,6 +32,12 @@
 #define MEMWATCH
 #define MEMWATCH_STDIO
 //#include "memwatch/memwatch.h"
+#endif
+
+#ifdef PYTHON_SCRIPT
+#define _PRINT  PySys_WriteStdout
+#else
+#define _PRINT  printf
 #endif
 
 #ifdef __qcs_core_library_debug_mode__
@@ -83,16 +89,16 @@ DYNAMIC_LIB_DECORATION char* compilator_name()
 
 DYNAMIC_LIB_DECORATION void amplitude_display_format(int _amplitude_disp_type)
 {
-  printf("amplitude_display_format: please, write me!!!!\n");
+  _PRINT("amplitude_display_format: please, write me!!!!\n");
 }
 
 DYNAMIC_LIB_DECORATION void info()
 {
-    printf("no state vector max qubits: %d\n",no_state_vector_max_qubits);
-    printf("use state vector max qubits: %d\n",use_state_vector_max_qubits);
-    printf("use graph state desc max qubits: %d\n",use_graph_state_desc_max_qubits);
-    printf("pqc mode max qubits: %d\n",pqc_mode_max_qubits);
-    printf("chp mode max qubits: %d\n",chp_mode_max_qubits);
+    _PRINT("no state vector max qubits: %d\n",no_state_vector_max_qubits);
+    _PRINT("use state vector max qubits: %d\n",use_state_vector_max_qubits);
+    _PRINT("use graph state desc max qubits: %d\n",use_graph_state_desc_max_qubits);
+    _PRINT("pqc mode max qubits: %d\n",pqc_mode_max_qubits);
+    _PRINT("chp mode max qubits: %d\n",chp_mode_max_qubits);
 }
 
 DYNAMIC_LIB_DECORATION void qcs_core_library_initialization()

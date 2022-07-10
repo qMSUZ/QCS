@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018, 2019, 2021 by Marek Sawerwain                     *
+ *   Copyright (C) 2018, 2019, 2021, 2022 by Marek Sawerwain               *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -40,8 +40,10 @@
 #define USE_ONEWAY_MODEL	   2006	
 #define USE_PQC_MODE	  	   2007	
 
-#define USE_SYMBOLIC_STATE_VECTOR_QUBIT 3001
-#define USE_SYMBOLIC_STATE_VECTOR_QUDIT 3002
+#define USE_STATE_VECTOR_MULTI_QUBITSQUDITS 3001
+
+#define USE_SYMBOLIC_STATE_VECTOR_QUBIT 4001
+#define USE_SYMBOLIC_STATE_VECTOR_QUDIT 4002
 
 typedef struct {
 
@@ -52,6 +54,8 @@ typedef struct {
 		  // multi qq (qubits and qudits)
 	el;   // error level
 
+	int *dim_of_qs; // table for size of individual qudits in 
+					// quantum register
 	Complex *vs; // vector state
 
 } QuantumRegister;
