@@ -1680,7 +1680,7 @@ DYNAMIC_LIB_DECORATION int qcs_quantum_register_measure_one_qubit_in_std_base_fo
             probe=probe_1;
         }
 
-       // state normalization
+        // state normalization
         for (i=0;i<max_i;i++)
         {
             qcs_mod_complex(q_reg->vs + i, &fmod);

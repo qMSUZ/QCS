@@ -49,7 +49,7 @@ C_MAIN_SOURCES = src/qcs_misc.c \
 	src/qcs_hash_table.c \
 	src/qcs_complex.c \
 	src/qcs_rand.c \
-	src/qcs_matrix.c \
+	src/qcs_matrix_and_vector.c \
 	src/qcs_qubit.c \
 	src/qcs_qubit_gates.c \
 	src/qcs_gates.c \
@@ -82,6 +82,10 @@ ex-spectral-decomposition-test: examples_ansi_c/ex-spectral-decomposition-test.c
 
 ex-rand-test: examples_ansi_c/ex-rand-test.c library
 	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+
+ex-matrix-and-vector-test: examples_ansi_c/ex-matrix-and-vector-test.c library
+	$(CC) -o ex-matrix-and-vector-test examples_ansi_c/ex-matrix-and-vector-test.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+
 
 microex1: examples_ansi_c/microexamples.c library
 	$(CC) -D__microEX1__ -o microex1 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm

@@ -24,7 +24,7 @@
 #ifndef __qcs_qubit_h__
 #define __qcs_qubit_h__
 
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 #include "qcs_complex.h"
 
 typedef struct {

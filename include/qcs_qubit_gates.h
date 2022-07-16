@@ -26,7 +26,7 @@
 
 #include <math.h>
 
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 #include "qcs_qubit.h"
 
 #ifdef __cplusplus

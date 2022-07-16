@@ -29,6 +29,8 @@
 extern "C" {
 #endif
 
+#include "qcs_matrix_and_vector.h"
+
 /* qudit gate generators */
 
 tf_qcs_matrix *get_qudit_zero_reset_gate(int freedom_level);

@@ -32,7 +32,7 @@
 //#include "qcs_hash_table.h"
 //#include "qcs_complex.h"
 //#include "qcs_vector.h"
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 #include "qcs_qubit.h"
 //#include "qcs_qudit.h"
 #include "qcs_quantum_register.h"

@@ -28,7 +28,7 @@
 #define  __qcs_quantum_register_h__
 
 #include "qcs_complex.h"
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 
 #define USE_NO_STATE_VECTOR    1001
 

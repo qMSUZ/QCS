@@ -34,7 +34,7 @@
 
 #include "qcs.h"
 #include "qcs_complex.h"
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 #include "qcs_gates.h"
 #include "qcs_qubit.h"
 #include "qcs_qubit_gates.h"

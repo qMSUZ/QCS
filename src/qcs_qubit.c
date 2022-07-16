@@ -38,7 +38,7 @@
 #endif
 
 #include "qcs.h"
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 #include "qcs_qubit.h"
 #include "qcs_rand.h"
 #include "qcs_misc.h"

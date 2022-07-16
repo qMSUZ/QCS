@@ -26,7 +26,7 @@
 
 #include "qcs_hash_table.h"
 #include "qcs_complex.h"
-#include "qcs_matrix.h"
+#include "qcs_matrix_and_vector.h"
 
 extern t_qcs_hash_table *qudit_gates_cache;
 
