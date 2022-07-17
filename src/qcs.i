@@ -149,11 +149,9 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		qcs_quantum_register_had_gate_for_whole_register( $self );
 	}
 
-    void SquareRootOfNot(int t)
+    void SquareRootOfNotN(int t)
 	{
-#ifdef PYTHON_SCRIPT
-		PySys_WriteStdout("Function unimplemented, yet!\n");
-#endif
+		qcs_quantum_register_square_root_not_n_gate($self, t);
 	}
 
 	void CNot(int c, int t)
@@ -198,6 +196,14 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	    if( $self->mode == USE_STATE_VECTOR_QUBIT )
 			qcs_quantum_register_print_bin( $self );
 	}
+
+	%feature("autodoc", "PrSqr()");
+	void PrSqr()
+	{
+	    if( $self->mode == USE_STATE_VECTOR_QUBIT )
+			qcs_quantum_register_print_bin_sqr( $self );
+	}
+
 
 	%feature("autodoc", "PrFull()");
 	void PrFull()

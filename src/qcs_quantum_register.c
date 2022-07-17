@@ -31,9 +31,15 @@
 #include <Python.h>
 #endif
 
-
 #include "qcs_quantum_register.h"
 #include "qcs_qubit_gates.h"
+
+#ifdef PYTHON_SCRIPT
+#define _PRINT  PySys_WriteStdout
+#else
+#define _PRINT  printf
+#endif
+
 
 DYNAMIC_LIB_DECORATION tf_qcs_quantum_register* qcs_new_quantum_register(int size)
 {
@@ -1892,11 +1898,13 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin(tf_qcs_quantum_regist
             qcs_dec2bin( i, q_reg->n, msg );
             if (q_reg->vs[i].re != 0 || q_reg->vs[i].im != 0)
             {
-#ifdef PYTHON_SCRIPT
-                PySys_WriteStdout( "%2.6f + %2.6fi |%s>\n", q_reg->vs[i].re, q_reg->vs[i].im, msg );
-#else
-                printf( "%2.6f + %2.6fi |%s>\n", q_reg->vs[i].re, q_reg->vs[i].im, msg );
-#endif
+
+//#ifdef PYTHON_SCRIPT
+//                PySys_WriteStdout( "%2.6f + %2.6fi |%s>\n", q_reg->vs[i].re, q_reg->vs[i].im, msg );
+//#else
+//                printf( "%2.6f + %2.6fi |%s>\n", q_reg->vs[i].re, q_reg->vs[i].im, msg );
+//#endif
+                _PRINT( "%2.6f + %2.6fi |%s>\n", q_reg->vs[i].re, q_reg->vs[i].im, msg );
             }
         }
     } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT)
@@ -1921,6 +1929,70 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin(tf_qcs_quantum_regist
 */
 }
 
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin_sqr(tf_qcs_quantum_register *q_reg)
+{
+    int i, max_value;
+    char msg[512];
+    tf_qcs_real_number ma, sum = 0;
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        memset(msg, 0, sizeof(msg));
+        max_value=1 << q_reg->n;
+
+        for (i=0;i<max_value;i++)
+        {
+            qcs_mod_complex(&q_reg->vs[i], &ma);
+            qcs_dec2bin(i, q_reg->n, msg);
+            if ( q_reg->vs[i].re!=0 || q_reg->vs[i].im!=0 )
+            {
+//#ifdef PYTHON_SCRIPT
+//                PySys_WriteStdout("%2.6f |%s>\n", ma * ma, msg);
+//#else
+//                printf("%2.6f |%s>\n", ma * ma, msg);
+//#endif
+                _PRINT("%2.6f |%s>\n", ma * ma, msg);
+                sum+=ma*ma;
+            }
+        }
+//#ifdef PYTHON_SCRIPT
+//                PySys_WriteStdout("sum=%2.6f\n", sum);
+//#else
+//                printf("amplitude sum=%2.6f\n", sum);
+//#endif
+                _PRINT("amplitude sum=%2.6f\n", sum);
+
+    } // if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+
+/*
+    if(q_reg->mode==USE_STATE_VECTOR_QUDIT)
+    {
+
+        memset ( msg, 0, sizeof(msg) );
+        max_value = (int)pow(q_reg->freedom_level, q_reg->size);
+        for ( i = 0 ; i < max_value ; i++ )
+        {
+            qcs_dec2base_d(i, q_reg->size, q_reg->freedom_level, msg);
+            if (q_reg->qudit_state->vec_state[i].re!=0 || q_reg->qudit_state->vec_state[i].im!=0)
+            {
+                qcs_mod_complex(&q_reg->qudit_state->vec_state[i], &ma);
+#ifdef PYTHON_SCRIPT
+                PySys_WriteStdout("%2.6f |%s>\n", ma * ma, msg);
+#else
+                printf("%2.6f  |%s>\n", ma * ma, msg);
+#endif
+                sum+=ma*ma;
+            }
+        }
+
+#ifdef PYTHON_SCRIPT
+                PySys_WriteStdout("sum=%2.6f\n", sum);
+#else
+                printf("sum=%2.6f\n", sum);
+#endif
+    } // if (q_reg->mode==USE_STATE_VECTOR_QUDIT)
+*/
+}
 
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin_full(tf_qcs_quantum_register *q_reg)
 {

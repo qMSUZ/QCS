@@ -108,11 +108,14 @@ class QuantumRegister(object):
     def Had(self, t):
         return _qcs.QuantumRegister_Had(self, t)
 
+    def HadN(self, t):
+        return _qcs.QuantumRegister_HadN(self, t)
+
     def HadAll(self):
         return _qcs.QuantumRegister_HadAll(self)
 
-    def SquareRootOfNot(self, t):
-        return _qcs.QuantumRegister_SquareRootOfNot(self, t)
+    def SquareRootOfNotN(self, t):
+        return _qcs.QuantumRegister_SquareRootOfNotN(self, t)
 
     def CNot(self, c, t):
         return _qcs.QuantumRegister_CNot(self, c, t)
@@ -133,6 +136,10 @@ class QuantumRegister(object):
     def Pr(self):
         r"""Pr()"""
         return _qcs.QuantumRegister_Pr(self)
+
+    def PrSqr(self):
+        r"""PrSqr()"""
+        return _qcs.QuantumRegister_PrSqr(self)
 
     def PrFull(self):
         r"""PrFull()"""
@@ -168,6 +175,9 @@ def qcs_quantum_register_set_state_bin(q_reg, state_desc):
 
 def qcs_quantum_register_print_bin(q_reg):
     return _qcs.qcs_quantum_register_print_bin(q_reg)
+
+def qcs_quantum_register_print_bin_sqr(q_reg):
+    return _qcs.qcs_quantum_register_print_bin_sqr(q_reg)
 
 def qcs_quantum_register_print_bin_full(q_reg):
     return _qcs.qcs_quantum_register_print_bin_full(q_reg)
