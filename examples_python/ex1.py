@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                     *
+ *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                        *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -36,9 +36,11 @@ q.Reset()
 q.HadN(0)
 q.Pr()
 print()
+q.PrSqr()
+print()
 q.PrFull()
 print()
-q.PrSqr()
+q.PrFullSqr()
 
 print()
 
@@ -50,4 +52,6 @@ print()
 q.PrFull()
 print()
 q.PrSqr()
+print()
+q.PrFullSqr()
 

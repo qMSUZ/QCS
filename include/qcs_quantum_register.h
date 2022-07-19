@@ -80,6 +80,7 @@ void qcs_quantum_register_set_state_bin(tf_qcs_quantum_register *q_reg, char *st
 void qcs_quantum_register_print_bin(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_sqr(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_full(tf_qcs_quantum_register *q_reg);
+void qcs_quantum_register_print_bin_full_sqr(tf_qcs_quantum_register *q_reg);
 
 void qcs_quantum_register_print_bin_with_prefix(tf_qcs_quantum_register *q_reg, char *prefix);
 

@@ -154,6 +154,11 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		qcs_quantum_register_square_root_not_n_gate($self, t);
 	}
 
+	void SqrtOfNotN(int t)
+	{
+		qcs_quantum_register_square_root_not_n_gate($self, t);
+	}
+
 	void CNot(int c, int t)
 	{
 		qcs_quantum_register_cnot( $self, c, t);
@@ -209,9 +214,16 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	void PrFull()
 	{
 	    if( $self->mode == USE_STATE_VECTOR_QUBIT )
-		qcs_quantum_register_print_bin_full( $self );
+			qcs_quantum_register_print_bin_full( $self );
 	}
 
+
+	%feature("autodoc", "PrFullSqr()");
+	void PrFullSqr()
+	{
+	    if( $self->mode == USE_STATE_VECTOR_QUBIT )
+			qcs_quantum_register_print_bin_full_sqr( $self );
+	}
 };
 
 

@@ -1960,7 +1960,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin_sqr(tf_qcs_quantum_re
 //#else
 //                printf("amplitude sum=%2.6f\n", sum);
 //#endif
-                _PRINT("amplitude sum=%2.6f\n", sum);
+        _PRINT("amplitude sum=%2.6f\n", sum);
 
     } // if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
 
@@ -2030,6 +2030,31 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin_full(tf_qcs_quantum_r
 */
 }
 
+void qcs_quantum_register_print_bin_full_sqr(tf_qcs_quantum_register *q_reg)
+{
+    int i, max_value;
+    char msg[512];
+    tf_qcs_real_number ma, sum = 0;
+
+    if ( q_reg->mode == USE_STATE_VECTOR_QUBIT )
+    {
+        memset( msg, 0, sizeof( msg ) );
+        max_value = 1 << q_reg->n;
+
+        for ( i=0; i<max_value; i++ )
+        {
+            qcs_mod_complex(&q_reg->vs[i], &ma);
+            qcs_dec2bin( i, q_reg->n, msg );
+            
+            _PRINT("%2.6f |%s>\n", ma * ma, msg);
+            sum+=ma*ma;
+        }
+
+        _PRINT("amplitude sum=%2.6f\n", sum);
+    } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT)
+
+}
+
 void qcs_quantum_register_print_bin_with_prefix(tf_qcs_quantum_register *q_reg, char *prefix)
 {
     int i, max_value;
@@ -2045,11 +2070,12 @@ void qcs_quantum_register_print_bin_with_prefix(tf_qcs_quantum_register *q_reg, 
             qcs_dec2bin( i, q_reg->n, msg );
             if (q_reg->vs[i].re != 0 || q_reg->vs[i].im != 0)
             {
-#ifdef PYTHON_SCRIPT
-                PySys_WriteStdout( "%s%2.6f + %2.6fi |%s>\n", prefix, q_reg->vs[i].re, q_reg->vs[i].im, msg );
-#else
-                printf( "%s%2.6f + %2.6fi |%s>\n", prefix, q_reg->vs[i].re, q_reg->vs[i].im, msg );
-#endif
+//#ifdef PYTHON_SCRIPT
+//                PySys_WriteStdout( "%s%2.6f + %2.6fi |%s>\n", prefix, q_reg->vs[i].re, q_reg->vs[i].im, msg );
+//#else
+//                printf( "%s%2.6f + %2.6fi |%s>\n", prefix, q_reg->vs[i].re, q_reg->vs[i].im, msg );
+//#endif
+                _PRINT( "%s%2.6f + %2.6fi |%s>\n", prefix, q_reg->vs[i].re, q_reg->vs[i].im, msg );
             }
         }
     } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT)    

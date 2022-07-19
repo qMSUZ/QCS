@@ -145,6 +145,10 @@ class QuantumRegister(object):
         r"""PrFull()"""
         return _qcs.QuantumRegister_PrFull(self)
 
+    def PrFullSqr(self):
+        r"""PrFullSqr()"""
+        return _qcs.QuantumRegister_PrFullSqr(self)
+
 # Register QuantumRegister in _qcs:
 _qcs.QuantumRegister_swigregister(QuantumRegister)
 
@@ -181,6 +185,9 @@ def qcs_quantum_register_print_bin_sqr(q_reg):
 
 def qcs_quantum_register_print_bin_full(q_reg):
     return _qcs.qcs_quantum_register_print_bin_full(q_reg)
+
+def qcs_quantum_register_print_bin_full_sqr(q_reg):
+    return _qcs.qcs_quantum_register_print_bin_full_sqr(q_reg)
 
 def qcs_quantum_register_print_bin_with_prefix(q_reg, prefix):
     return _qcs.qcs_quantum_register_print_bin_with_prefix(q_reg, prefix)
