@@ -687,7 +687,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_mx_rot90_n_gate(tf_qcs_quantum_
 
 }
 
-DYNAMIC_LIB_DECORATION void qcs_quantum_register_my_rot90_n(tf_qcs_quantum_register *q_reg, int i)
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_my_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i)
 {
     char t[128];
     int j;
