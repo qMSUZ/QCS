@@ -35,6 +35,10 @@
 #endif
 
 #ifdef PYTHON_SCRIPT
+#include <Python.h>
+#endif
+
+#ifdef PYTHON_SCRIPT
 #define _PRINT  PySys_WriteStdout
 #else
 #define _PRINT  printf

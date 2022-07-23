@@ -94,39 +94,79 @@ class QuantumRegister(object):
     __swig_destroy__ = _qcs.delete_QuantumRegister
 
     def Reset(self):
+        r"""Reset()"""
         return _qcs.QuantumRegister_Reset(self)
 
     def X(self, t):
+        r"""X(int t)"""
         return _qcs.QuantumRegister_X(self, t)
 
     def Y(self, t):
+        r"""Y(int t)"""
         return _qcs.QuantumRegister_Y(self, t)
 
     def Z(self, t):
+        r"""Z(int t)"""
         return _qcs.QuantumRegister_Z(self, t)
 
+    def MXRot90N(self, t):
+        r"""MXRot90N(int t)"""
+        return _qcs.QuantumRegister_MXRot90N(self, t)
+
+    def MYRot90N(self, t):
+        r"""MYRot90N(int t)"""
+        return _qcs.QuantumRegister_MYRot90N(self, t)
+
+    def MZRot90N(self, t):
+        r"""MZRot90N(int t)"""
+        return _qcs.QuantumRegister_MZRot90N(self, t)
+
+    def XRot90N(self, t):
+        r"""XRot90N(int t)"""
+        return _qcs.QuantumRegister_XRot90N(self, t)
+
+    def YRot90N(self, t):
+        r"""YRot90N(int t)"""
+        return _qcs.QuantumRegister_YRot90N(self, t)
+
+    def ZRot90N(self, t):
+        r"""ZRot90N(int t)"""
+        return _qcs.QuantumRegister_ZRot90N(self, t)
+
     def Had(self, t):
+        r"""Had(int t)"""
         return _qcs.QuantumRegister_Had(self, t)
 
     def HadN(self, t):
+        r"""HadN(int t)"""
         return _qcs.QuantumRegister_HadN(self, t)
 
     def HadAll(self):
+        r"""HadAll()"""
         return _qcs.QuantumRegister_HadAll(self)
 
     def SquareRootOfNotN(self, t):
+        r"""SquareRootOfNotN(int t)"""
         return _qcs.QuantumRegister_SquareRootOfNotN(self, t)
 
+    def SqrtOfNotN(self, t):
+        r"""SqrtOfNotN(int t)"""
+        return _qcs.QuantumRegister_SqrtOfNotN(self, t)
+
     def CNot(self, c, t):
+        r"""CNot(int c, int t)"""
         return _qcs.QuantumRegister_CNot(self, c, t)
 
     def Measure(self):
+        r"""Measure()"""
         return _qcs.QuantumRegister_Measure(self)
 
     def M(self, t):
+        r"""M(int t)"""
         return _qcs.QuantumRegister_M(self, t)
 
     def MeasureN(self, _from, _to):
+        r"""MeasureN(int _from, int _to)"""
         return _qcs.QuantumRegister_MeasureN(self, _from, _to)
 
     def Noop(self):
@@ -234,8 +274,8 @@ def qcs_quantum_register_z_rot90_n_gate(q_reg, i):
 def qcs_quantum_register_mx_rot90_n_gate(q_reg, i):
     return _qcs.qcs_quantum_register_mx_rot90_n_gate(q_reg, i)
 
-def qcs_quantum_register_my_rot90_n(q_reg, i):
-    return _qcs.qcs_quantum_register_my_rot90_n(q_reg, i)
+def qcs_quantum_register_my_rot90_n_gate(q_reg, i):
+    return _qcs.qcs_quantum_register_my_rot90_n_gate(q_reg, i)
 
 def qcs_quantum_register_mz_rot90_n_gate(q_reg, i):
     return _qcs.qcs_quantum_register_mz_rot90_n_gate(q_reg, i)

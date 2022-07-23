@@ -114,56 +114,104 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		qcs_delete_quantum_register( $self );
 	}
 
+	%feature("autodoc", "Reset()");
 	void Reset()
 	{
 	    qcs_quantum_register_reset( $self );
 	}
 
+	%feature("autodoc", "X(int t)");
 	void X(int t)
 	{
 		qcs_quantum_register_pauli_x_gate( $self, t );
 	}
 
+	%feature("autodoc", "Y(int t)");
 	void Y(int t)
 	{
 		qcs_quantum_register_pauli_y_gate( $self, t );
 	}
 
+    %feature("autodoc", "Z(int t)");
 	void Z(int t)
 	{
 		qcs_quantum_register_pauli_z_gate( $self, t );
 	}
 
+	%feature("autodoc", "MXRot90N(int t)");
+	void MXRot90N(int t)
+	{
+		qcs_quantum_register_mx_rot90_n_gate( $self, t);
+	}
+
+	%feature("autodoc", "MYRot90N(int t)");
+	void MYRot90N(int t)
+	{
+		qcs_quantum_register_my_rot90_n_gate( $self, t);
+	}
+
+	%feature("autodoc", "MZRot90N(int t)");
+	void MZRot90N(int t)
+	{
+		qcs_quantum_register_mz_rot90_n_gate( $self, t);
+	}
+
+	%feature("autodoc", "XRot90N(int t)");
+	void XRot90N(int t)
+	{
+		qcs_quantum_register_x_rot90_n_gate( $self, t);
+	}
+
+	%feature("autodoc", "YRot90N(int t)");
+	void YRot90N(int t)
+	{
+		qcs_quantum_register_y_rot90_n_gate( $self, t);
+	}
+
+	%feature("autodoc", "ZRot90N(int t)");
+	void ZRot90N(int t)
+	{
+		qcs_quantum_register_z_rot90_n_gate( $self, t);
+	}
+
+
+	%feature("autodoc", "Had(int t)");
 	void Had(int t)
 	{
 		qcs_quantum_register_had_n_gate( $self, t );
 	}
 
+	%feature("autodoc", "HadN(int t)");
 	void HadN(int t)
 	{
 		qcs_quantum_register_had_n_gate( $self, t );
 	}
 
+	%feature("autodoc", "HadAll()");
 	void HadAll()
 	{
 		qcs_quantum_register_had_gate_for_whole_register( $self );
 	}
 
+	%feature("autodoc", "SquareRootOfNotN(int t)");
     void SquareRootOfNotN(int t)
 	{
 		qcs_quantum_register_square_root_not_n_gate($self, t);
 	}
 
+	%feature("autodoc", "SqrtOfNotN(int t)");
 	void SqrtOfNotN(int t)
 	{
 		qcs_quantum_register_square_root_not_n_gate($self, t);
 	}
 
+	%feature("autodoc", "CNot(int c, int t)");
 	void CNot(int c, int t)
 	{
 		qcs_quantum_register_cnot( $self, c, t);
 	}
 
+	%feature("autodoc", "Measure()");
 	int Measure()
 	{
 #ifdef PYTHON_SCRIPT
@@ -172,6 +220,7 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		return -1;
 	}
 
+	%feature("autodoc", "M(int t)");
 	int M(int t)
 	{
 #ifdef PYTHON_SCRIPT
@@ -180,6 +229,7 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	return -1;
 	}
 
+	%feature("autodoc", "MeasureN(int _from, int _to)");
 	int MeasureN(int _from, int _to)
 	{
 #ifdef PYTHON_SCRIPT
@@ -187,7 +237,6 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 #endif
 		return -1;
 	}
-
 
 	%feature("autodoc", "Noop()") Noop();
 	void Noop()
