@@ -107,7 +107,7 @@ microex4: examples_ansi_c/microexamples.c library
 clean:
 	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc \
 		microex1 microex2 microex3 microex4 \
-		ex-rand-test ex-spectral-decomposition-test
+		ex-rand-test ex-spectral-decomposition-test ex-matrix-and-vector-test
 
 help:
 	@echo ".:             The Quantum Computing Simulator -- make build system             :."
