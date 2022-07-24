@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                        *
+ *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                     *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -30,6 +30,8 @@
 
 import qcs
 
+print()
+
 print("Register after Had on qubit 0")
 q = qcs.QuantumRegister()
 q.Reset()
@@ -54,4 +56,12 @@ print()
 q.PrSqr()
 print()
 q.PrFullSqr()
+
+print()
+
+print("Register after set GHZ state for four qubits")
+q = qcs.QuantumRegister(4)
+q.Reset()
+q.SetGHZState()
+q.Pr()
 

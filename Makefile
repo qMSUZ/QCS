@@ -76,6 +76,9 @@ library: $(C_OBJ_MAIN_SOURCES) $(CC_OBJ_MAIN_SOURCES)
 python_port: library qcs_wrap.o
 	$(CC) $(LIB_OPT) -shared qcs_wrap.o libqcs.a -o $(QCS_PYTHON_OUT) $(PYTHON_LIB) -llapack -lblas -lgfortran -lm
 	cp src/qcs.py qcs.py
+	cp src/qcs.py examples_python/qcs.py
+	cp _qcs.so examples_python/_qcs.so
+
 
 ex-spectral-decomposition-test: examples_ansi_c/ex-spectral-decomposition-test.c library
 	$(CC) -o ex-spectral-decomposition-test examples_ansi_c/ex-spectral-decomposition-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3 -llapack -lblas -lgfortran -lm
@@ -105,7 +108,9 @@ microex4: examples_ansi_c/microexamples.c library
 
 
 clean:
-	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o _qcs.so *.pyc \
+	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o \
+		examples_python/_qcs.so examples_python/qcs.py \
+		*.pyc \
 		microex1 microex2 microex3 microex4 \
 		ex-rand-test ex-spectral-decomposition-test ex-matrix-and-vector-test
 

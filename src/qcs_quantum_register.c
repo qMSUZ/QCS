@@ -181,7 +181,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_state_dec(tf_qcs_quantum_re
 
         if (q_reg->vs!=NULL)
         {
-            for (i=0;i<(1 << q_reg->vec_state_size);i++)
+            for (i=0;i<(q_reg->vec_state_size);i++)
             {
                 q_reg->vs[i].re=0;
                 q_reg->vs[i].im=0;
@@ -202,7 +202,6 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_state_dec(tf_qcs_quantum_re
     }
 }
 
-
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_state_bin(tf_qcs_quantum_register *q_reg, char *state_desc)
 {
     if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
@@ -221,6 +220,42 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_state_bin(tf_qcs_quantum_re
         //qcs_quantum_register_set_state_dec(q_reg, v);
     }
 }
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_fill_zero(tf_qcs_quantum_register *q_reg)
+{
+    int i;
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        for (i=0;i<(q_reg->vec_state_size);i++)
+        {
+            q_reg->vs[i].re=0.0;
+            q_reg->vs[i].im=0.0;
+        }
+    }
+
+/*
+    if (q_reg->mode==USE_STATE_VECTOR_QUDIT)
+    {
+        qcs_qudit_state_fill_zero( q_reg->qudit_state );
+    }
+*/
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_set_ghz_state(tf_qcs_quantum_register *q_reg)
+{
+    qcs_quantum_register_fill_zero( q_reg );
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        q_reg->vs[0].re=(tf_qcs_real_number)(1.0 / sqrt(2.0));
+        q_reg->vs[0].im=(tf_qcs_real_number)0.0;
+        q_reg->vs[(q_reg->vec_state_size)-1].re=(tf_qcs_real_number)(1.0 / sqrt(2.0));
+        q_reg->vs[(q_reg->vec_state_size)-1].im=(tf_qcs_real_number)0.0;
+    }
+
+}
+
 
 
 /**
@@ -721,7 +756,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_my_rot90_n_gate(tf_qcs_quantum_
 //           qcs_quantum_reg_mult_by_matrix(q_reg, m);
 //           qcs_delete_matrix(m);
 
-        //qcs_quantum_reg_rebuild_state_vector(q_reg);
+//           qcs_quantum_reg_rebuild_state_vector(q_reg);
         applied_1q_gate_to_quantum_register( q_reg, i, get_minus_y_rot90_gate() );
     }
 

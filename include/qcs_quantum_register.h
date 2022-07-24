@@ -86,6 +86,10 @@ void qcs_quantum_register_print_bin_with_prefix(tf_qcs_quantum_register *q_reg, 
 
 void qcs_quantum_register_print_dec(tf_qcs_quantum_register *q_reg);
 
+void qcs_quantum_register_fill_zero(tf_qcs_quantum_register *q_reg);
+
+void qcs_quantum_register_set_ghz_state(tf_qcs_quantum_register *q_reg);
+
 void applied_1q_gate_to_quantum_register ( tf_qcs_quantum_register *q_reg, int t, tf_qcs_matrix *u);
 void applied_2q_gate_to_quantum_register_one_control(tf_qcs_quantum_register *q_reg, int c1, int t, tf_qcs_matrix *u);
 

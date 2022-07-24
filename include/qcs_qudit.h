@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 -- 2010 by Marek Sawerwain                         *
  *                                         <M.Sawerwain@gmail.com>         *
- *   Copyright (C) 2007 -- 2008 by Przemys≥aw Ratajczak                    *
+ *   Copyright (C) 2007 -- 2008 by Przemys≈Çaw Ratajczak                    *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
  *   http://code.google.com/p/qcs                                          *

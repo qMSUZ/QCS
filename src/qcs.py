@@ -97,6 +97,10 @@ class QuantumRegister(object):
         r"""Reset()"""
         return _qcs.QuantumRegister_Reset(self)
 
+    def SetGHZState(self):
+        r"""SetGHZState()"""
+        return _qcs.QuantumRegister_SetGHZState(self)
+
     def X(self, t):
         r"""X(int t)"""
         return _qcs.QuantumRegister_X(self, t)
@@ -234,6 +238,12 @@ def qcs_quantum_register_print_bin_with_prefix(q_reg, prefix):
 
 def qcs_quantum_register_print_dec(q_reg):
     return _qcs.qcs_quantum_register_print_dec(q_reg)
+
+def qcs_quantum_register_fill_zero(q_reg):
+    return _qcs.qcs_quantum_register_fill_zero(q_reg)
+
+def qcs_quantum_register_set_ghz_state(q_reg):
+    return _qcs.qcs_quantum_register_set_ghz_state(q_reg)
 
 def applied_1q_gate_to_quantum_register(q_reg, t, u):
     return _qcs.applied_1q_gate_to_quantum_register(q_reg, t, u)

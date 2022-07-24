@@ -120,6 +120,16 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	    qcs_quantum_register_reset( $self );
 	}
 
+	// method for state set
+
+	%feature("autodoc", "SetGHZState()");
+	void SetGHZState()
+	{
+		qcs_quantum_register_set_ghz_state( $self );
+	}
+ 
+	// single gate operations
+
 	%feature("autodoc", "X(int t)");
 	void X(int t)
 	{
@@ -174,7 +184,6 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		qcs_quantum_register_z_rot90_n_gate( $self, t);
 	}
 
-
 	%feature("autodoc", "Had(int t)");
 	void Had(int t)
 	{
@@ -205,11 +214,15 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		qcs_quantum_register_square_root_not_n_gate($self, t);
 	}
 
+	// two qubit/qudit gate operations
+
 	%feature("autodoc", "CNot(int c, int t)");
 	void CNot(int c, int t)
 	{
 		qcs_quantum_register_cnot( $self, c, t);
 	}
+
+	// measure operation
 
 	%feature("autodoc", "Measure()");
 	int Measure()
