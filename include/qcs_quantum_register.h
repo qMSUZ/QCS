@@ -45,6 +45,10 @@
 #define USE_SYMBOLIC_STATE_VECTOR_QUBIT 4001
 #define USE_SYMBOLIC_STATE_VECTOR_QUDIT 4002
 
+enum ERROR_LEVEL_ENUMS {
+	ERROR_BAD_QUBIT_NUMBER = 0x1001
+};
+
 typedef struct {
 
     int n,    // size of quantum register in qubits/qudits
@@ -133,7 +137,9 @@ int qcs_quantum_register_measure_one_qubit(tf_qcs_quantum_register *q_reg, int k
 int qcs_quantum_register_measure_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int k);
 int qcs_quantum_register_measure_one_qubit_in_std_base_force(tf_qcs_quantum_register *q_reg, int k, int force_result);
 
-void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int k, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1);
+int qcs_quantum_register_measure_from_to(tf_qcs_quantum_register *q_reg, int q_from, int q_to);
+
+void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int t, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1);
 
 tf_qcs_matrix* qcs_quantum_register_generate_density_matrix(tf_qcs_quantum_register *q_reg);
 

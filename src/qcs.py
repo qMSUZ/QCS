@@ -77,6 +77,7 @@ USE_PQC_MODE = _qcs.USE_PQC_MODE
 USE_STATE_VECTOR_MULTI_QUBITSQUDITS = _qcs.USE_STATE_VECTOR_MULTI_QUBITSQUDITS
 USE_SYMBOLIC_STATE_VECTOR_QUBIT = _qcs.USE_SYMBOLIC_STATE_VECTOR_QUBIT
 USE_SYMBOLIC_STATE_VECTOR_QUDIT = _qcs.USE_SYMBOLIC_STATE_VECTOR_QUDIT
+ERROR_BAD_QUBIT_NUMBER = _qcs.ERROR_BAD_QUBIT_NUMBER
 class QuantumRegister(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -97,9 +98,9 @@ class QuantumRegister(object):
         r"""Reset()"""
         return _qcs.QuantumRegister_Reset(self)
 
-    def SetGHZState(self):
+    def SetGHZ01State(self):
         r"""SetGHZState()"""
-        return _qcs.QuantumRegister_SetGHZState(self)
+        return _qcs.QuantumRegister_SetGHZ01State(self)
 
     def X(self, t):
         r"""X(int t)"""
@@ -172,6 +173,14 @@ class QuantumRegister(object):
     def MeasureN(self, _from, _to):
         r"""MeasureN(int _from, int _to)"""
         return _qcs.QuantumRegister_MeasureN(self, _from, _to)
+
+    def MeasureOneQubit(self, t):
+        r"""MeasureOneQubit(int t) -> int"""
+        return _qcs.QuantumRegister_MeasureOneQubit(self, t)
+
+    def ProbeQubitStdBase(self, i):
+        r"""ProbeQubitStdBase(int i) -> [p0,p1]"""
+        return _qcs.QuantumRegister_ProbeQubitStdBase(self, i)
 
     def Noop(self):
         r"""Noop()"""
@@ -341,8 +350,11 @@ def qcs_quantum_register_measure_one_qubit_in_std_base(q_reg, k):
 def qcs_quantum_register_measure_one_qubit_in_std_base_force(q_reg, k, force_result):
     return _qcs.qcs_quantum_register_measure_one_qubit_in_std_base_force(q_reg, k, force_result)
 
-def qcs_quantum_register_probe_one_qubit_in_std_base(q_reg, k, out_value_0, out_value_1):
-    return _qcs.qcs_quantum_register_probe_one_qubit_in_std_base(q_reg, k, out_value_0, out_value_1)
+def qcs_quantum_register_measure_from_to(q_reg, q_from, q_to):
+    return _qcs.qcs_quantum_register_measure_from_to(q_reg, q_from, q_to)
+
+def qcs_quantum_register_probe_one_qubit_in_std_base(q_reg, t, out_value_0, out_value_1):
+    return _qcs.qcs_quantum_register_probe_one_qubit_in_std_base(q_reg, t, out_value_0, out_value_1)
 
 def qcs_quantum_register_generate_density_matrix(q_reg):
     return _qcs.qcs_quantum_register_generate_density_matrix(q_reg)

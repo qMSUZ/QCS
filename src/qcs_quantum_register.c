@@ -1296,7 +1296,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_probe_one_qubit(tf_qcs_quantum_
     qcs_quantum_register_probe_one_qubit_in_std_base(q_reg, k, out_value_0, out_value_1);
 }
 
-DYNAMIC_LIB_DECORATION void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int k, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1)
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int t, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1)
 {
     char bin[127];
     int m_result = -1;
@@ -1312,8 +1312,10 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_probe_one_qubit_in_std_base(tf_
     if ( q_reg->mode == USE_STATE_VECTOR_QUBIT )
     {
         // check the number of qubit
-        if ( k < 0 || k >= n )
+        if ( t < 0 || t >= n )
         {
+            q_reg->el = ERROR_BAD_QUBIT_NUMBER;
+
             return;
         }
 
@@ -1322,7 +1324,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_probe_one_qubit_in_std_base(tf_
         memset(&bin[0], 0, 127);
 
         for (j=0;j<n;j++) bin[j]='0';
-        bin[k]='1';
+        bin[t]='1';
 
         q_mask=qcs_bin2dec(&bin[0]);
 
@@ -1871,17 +1873,18 @@ DYNAMIC_LIB_DECORATION int qcs_quantum_register_measure_one_qubit_with_observabl
     return -1; // unknown simulation mode
 }
 
-DYNAMIC_LIB_DECORATION int qcs_quantum_reg_measure_from_to(tf_qcs_quantum_register *q_reg, int q_from, int q_to)
+DYNAMIC_LIB_DECORATION int qcs_quantum_register_measure_from_to(tf_qcs_quantum_register *q_reg, int q_from, int q_to)
 {
     int idx, i, q, qubits, qubit_value;
-    char t1[128], t2[128];
+    //char t1[128]; 
+    char t2[128];
 
     qubits=q_to - q_from + 1;
 
     if ( q_reg->mode == USE_STATE_VECTOR_QUBIT )
     {
 
-        // czy numery qubitów są poprawne
+        // we check whether qubits numbers are correct
         if ( q_from > q_to )
             return -1;
         if ( q_from < 0 || q_from >= q_reg->n )
@@ -1902,9 +1905,10 @@ DYNAMIC_LIB_DECORATION int qcs_quantum_reg_measure_from_to(tf_qcs_quantum_regist
         return qcs_bin2dec(t2);
     }
 
+/*
     if( q_reg->mode == USE_STATE_VECTOR_QUDIT )
     {
-        // czy numery quditów są poprawne
+        //  we check whether qudits numbers are correct
         if ( q_from > q_to )
             return -1;
         if ( q_from < 0 || q_from >= q_reg->n )
@@ -1912,6 +1916,7 @@ DYNAMIC_LIB_DECORATION int qcs_quantum_reg_measure_from_to(tf_qcs_quantum_regist
         if ( q_to < 0 || q_to >= q_reg->n )
             return -1;
     }
+*/
 
     return -1;
 

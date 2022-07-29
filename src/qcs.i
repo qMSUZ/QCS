@@ -123,7 +123,7 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	// method for state set
 
 	%feature("autodoc", "SetGHZState()");
-	void SetGHZState()
+	void SetGHZ01State()
 	{
 		qcs_quantum_register_set_ghz_state( $self );
 	}
@@ -245,10 +245,24 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	%feature("autodoc", "MeasureN(int _from, int _to)");
 	int MeasureN(int _from, int _to)
 	{
-#ifdef PYTHON_SCRIPT
-		PySys_WriteStdout("Function unimplemented, yet!\n");
-#endif
-		return -1;
+		return qcs_quantum_register_measure_from_to( $self, _from, _to);
+	}
+
+    %feature("autodoc", "MeasureOneQubit(int t) -> int") MeasureOneQubit(int t);
+	int MeasureOneQubit(int t)
+	{
+		return qcs_quantum_register_measure_one_qubit( $self, t);
+	}
+
+	%feature("autodoc", "ProbeQubitStdBase(int i) -> [p0,p1]") ProbeQubitStdBase(int i, float *p0, float *p1);
+	%apply float *OUTPUT { float *p0, float *p1 };
+	void ProbeQubitStdBase(int i, float *p0, float *p1)
+	{
+		float _tmp_p0, _tmp_p1;
+		qcs_quantum_register_probe_one_qubit_in_std_base( $self, i, &_tmp_p0, &_tmp_p1);
+		
+		*p0 = _tmp_p0;
+		*p1 = _tmp_p1;
 	}
 
 	%feature("autodoc", "Noop()") Noop();
