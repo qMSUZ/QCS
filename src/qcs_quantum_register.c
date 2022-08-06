@@ -1969,6 +1969,46 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin(tf_qcs_quantum_regist
 */
 }
 
+void qcs_quantum_register_print_bin_in_matlab_format(tf_qcs_quantum_register *q_reg)
+{
+    int i, max_value;
+    char msg[512];
+
+    if ( q_reg->mode == USE_STATE_VECTOR_QUBIT)
+    {
+        memset( msg, 0, sizeof(msg) );
+        max_value = 1 << q_reg->n;
+
+        _PRINT( "[ ... \n" );
+        for ( i=0; i<max_value; i++ )
+        {
+            qcs_dec2bin( i, q_reg->n, msg );
+            if (q_reg->vs[i].re != 0 || q_reg->vs[i].im != 0)
+            {
+                _PRINT( "(%2.6f + %2.6fi) ; ... %% |%s> \n", q_reg->vs[i].re, q_reg->vs[i].im, msg );
+            }
+        }
+        _PRINT( "]\n" );
+    } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT)
+
+
+/*
+    if ( q_reg->mode == USE_STATE_VECTOR_QUDIT)
+    {
+    }
+*/
+
+/*
+    if( q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUBIT )
+    {
+    }
+
+    if( q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUDIT )
+    {
+    }
+*/   
+}
+
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_bin_sqr(tf_qcs_quantum_register *q_reg)
 {
     int i, max_value;

@@ -82,6 +82,7 @@ void qcs_quantum_register_set_state_dec(tf_qcs_quantum_register *q_reg, int n);
 void qcs_quantum_register_set_state_bin(tf_qcs_quantum_register *q_reg, char *state_desc);
 
 void qcs_quantum_register_print_bin(tf_qcs_quantum_register *q_reg);
+void qcs_quantum_register_print_bin_in_matlab_format(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_sqr(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_full(tf_qcs_quantum_register *q_reg);
 void qcs_quantum_register_print_bin_full_sqr(tf_qcs_quantum_register *q_reg);

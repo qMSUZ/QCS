@@ -123,6 +123,12 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	// method for state set
 
 	%feature("autodoc", "SetGHZState()");
+	void SetGHZState()
+	{
+		qcs_quantum_register_set_ghz_state( $self );
+	}
+
+	%feature("autodoc", "SetGHZ01State()");
 	void SetGHZ01State()
 	{
 		qcs_quantum_register_set_ghz_state( $self );
@@ -299,6 +305,20 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	{
 	    if( $self->mode == USE_STATE_VECTOR_QUBIT )
 			qcs_quantum_register_print_bin_full_sqr( $self );
+	}
+
+	%feature("autodoc", "PrAsMatlab()");
+	void PrAsMatlab()
+	{
+		qcs_quantum_register_print_bin_in_matlab_format( $self );
+	}
+
+	%feature("autodoc", "PrAsMathematica()");
+	void PrAsMathematica()
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
 	}
 };
 
