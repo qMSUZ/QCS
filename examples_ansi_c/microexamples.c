@@ -144,6 +144,39 @@ void qcs_quantum_reg_test4()
 }
 #endif
 
+#ifdef __microEX5__
+void qcs_gates_test1()
+{
+	tf_qcs_matrix *m;
+	tf_qcs_real_number theta;
+
+	m = get_hadamard_gate();
+
+	qcs_print_matrix_in_matlab_format_with_prefix(m, "hadamard=");
+	printf("\n");
+
+	theta = 0.126;
+	m = qcs_get_rot_z_gate( theta );
+	printf("theta=%lf\n", theta);
+	qcs_print_matrix_in_matlab_format_with_prefix(m, "rz=");
+	printf("\n");
+
+
+	theta = 1.78;
+	m = qcs_get_rot_y_gate( theta );
+	printf("theta=%lf\n", theta);
+	qcs_print_matrix_in_matlab_format_with_prefix(m, "ry=");
+	printf("\n");
+
+	theta = 2.8;
+	m = qcs_get_rot_x_gate( theta );
+	printf("theta=%lf\n", theta);
+	qcs_print_matrix_in_matlab_format_with_prefix(m, "rx=");
+	printf("\n");
+
+}
+#endif
+
 int main( int argc, char *argv[] )
 {
 	qcs_core_library_initialization();
@@ -173,6 +206,12 @@ int main( int argc, char *argv[] )
 	printf(": __microEX4__\n");
 	printf(": qcs_quantum_reg_test4\n");
 	qcs_quantum_reg_test4();
+#endif
+
+#ifdef __microEX5__
+	printf(": __microEX5__\n");
+	printf(": qcs_gates_test1\n");
+	qcs_gates_test1();
 #endif
 
 	qcs_core_library_deinitialization();

@@ -154,6 +154,43 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 		qcs_quantum_register_pauli_z_gate( $self, t );
 	}
 
+	%feature("autodoc", "XRotN(int t, tf_qcs_real_number a)");
+	void XRotN(int t, tf_qcs_real_number a)
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	}
+
+	%feature("autodoc", "YRotN(int t, tf_qcs_real_number a)");
+	void YRotN(int t, tf_qcs_real_number a)
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	}
+	
+	%feature("autodoc", "ZRotN(int t, tf_qcs_real_number a)");
+	void ZRotN(int t, tf_qcs_real_number a)
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	}
+
+
+	%feature("autodoc", "RotAlphaN(int i, tf_qcs_real_number alpha)");
+	void RotAlphaN(int i, tf_qcs_real_number alpha)
+	{
+		qcs_quantum_register_rotate_alpha_n_gate( $self, i, alpha );
+	}	
+
+	%feature("autodoc", "RotThetaN(int i, tf_qcs_real_number theta)");
+	void RotThetaN(int i, tf_qcs_real_number theta)
+	{
+		qcs_quantum_register_rotate_theta_n_gate( $self, i, theta );
+	}	
+
 	%feature("autodoc", "MXRot90N(int t)");
 	void MXRot90N(int t)
 	{

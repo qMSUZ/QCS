@@ -106,12 +106,16 @@ microex4: examples_ansi_c/microexamples.c library
 	$(CC) -D__microEX4__ -o microex4 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
 #	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
 
+microex5: examples_ansi_c/microexamples.c library
+	$(CC) -D__microEX5__ -o microex5 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+
 
 clean:
 	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o \
 		examples_python/_qcs.so examples_python/qcs.py \
 		*.pyc \
-		microex1 microex2 microex3 microex4 \
+		microex1 microex2 microex3 microex4 microex5 \
 		ex-rand-test ex-spectral-decomposition-test ex-matrix-and-vector-test
 
 help:

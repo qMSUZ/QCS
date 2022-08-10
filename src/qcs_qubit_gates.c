@@ -88,6 +88,9 @@ static tf_qcs_matrix *minus_y_rot90_gate=NULL;
 static tf_qcs_matrix *minus_z_rot90_gate=NULL;
 static tf_qcs_matrix *rotate_alpha_gate=NULL;
 static tf_qcs_matrix *rotate_theta_gate=NULL;
+static tf_qcs_matrix *rot_x_gate=NULL;
+static tf_qcs_matrix *rot_y_gate=NULL;
+static tf_qcs_matrix *rot_z_gate=NULL;
 static tf_qcs_matrix *t_gate=NULL;
 static tf_qcs_matrix *s_gate=NULL;
 static tf_qcs_matrix *phase_gate=NULL;
@@ -117,6 +120,10 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix * give_qubit_matrix(char *arg)
     if (strcmp(arg,"9x")==0) return get_x_rot90_gate();
     if (strcmp(arg,"9y")==0) return get_y_rot90_gate();
     if (strcmp(arg,"9z")==0) return get_z_rot90_gate();
+
+    if (strcmp(arg,"rx")==0) return qcs_get_rot_x_gate( (tf_qcs_real_number)0.0 );
+    if (strcmp(arg,"ry")==0) return qcs_get_rot_y_gate( (tf_qcs_real_number)0.0 );
+    if (strcmp(arg,"rz")==0) return qcs_get_rot_z_gate( (tf_qcs_real_number)0.0 );
 
     if (strcmp(arg,"m9x")==0) return get_minus_x_rot90_gate();
     if (strcmp(arg,"m9y")==0) return get_minus_y_rot90_gate();
@@ -353,19 +360,28 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix *get_fredkin_gate()
     return NULL;
 }
 
-DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_rot_x_gate(tf_qcs_real_number theta)
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_get_rot_x_gate(tf_qcs_real_number theta)
 {
-    return NULL;
+    (rot_x_gate->m+0)->re=cos(theta/2.0);   (rot_x_gate->m+0)->im=0.0;                 (rot_x_gate->m+1)->re=0.0;               (rot_x_gate->m+1)->im=-sin(theta/2.0);
+    (rot_x_gate->m+2)->re=0.0;              (rot_x_gate->m+2)->im=-sin(theta/2.0);     (rot_x_gate->m+3)->re=cos(theta/2.0);    (rot_x_gate->m+3)->im=0.0;
+
+    return rot_x_gate;
 }
 
-DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_rot_y_gate(tf_qcs_real_number theta)
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_get_rot_y_gate(tf_qcs_real_number theta)
 {
-    return NULL;
+    (rot_y_gate->m+0)->re=cos(theta/2.0); (rot_y_gate->m+0)->im=0.0;     (rot_y_gate->m+1)->re=-sin(theta/2.0); (rot_y_gate->m+1)->im=0.0;
+    (rot_y_gate->m+2)->re=sin(theta/2.0); (rot_y_gate->m+2)->im=0.0;     (rot_y_gate->m+3)->re= cos(theta/2.0); (rot_y_gate->m+3)->im=0.0;
+
+    return rot_y_gate;
 }
 
-DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_rot_z_gate(tf_qcs_real_number theta)
+DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_get_rot_z_gate(tf_qcs_real_number theta)
 {
-    return NULL;
+    (rot_z_gate->m+0)->re=cos(theta/2.0); (rot_z_gate->m+0)->im=-sin(theta/2.0);     (rot_z_gate->m+1)->re=0.0;            (rot_z_gate->m+1)->im=0.0;
+    (rot_z_gate->m+2)->re=0.0;            (rot_z_gate->m+2)->im=0.0;                 (rot_z_gate->m+3)->re=cos(theta/2.0); (rot_z_gate->m+3)->im=sin(theta/2.0);
+
+    return rot_z_gate;
 }
 
 DYNAMIC_LIB_DECORATION tf_qcs_matrix *qcs_create_matrix_for_e_2q_gate_float_arg(float gamma)
@@ -449,6 +465,9 @@ DYNAMIC_LIB_DECORATION void qcs_build_qubit_gates_matrix()
      minus_z_rot90_gate=qcs_create_matrix(2,2);
      rotate_alpha_gate=qcs_create_matrix(2,2);
      rotate_theta_gate=qcs_create_matrix(2,2);
+     rot_x_gate=qcs_create_matrix(2,2);
+     rot_y_gate=qcs_create_matrix(2,2);
+     rot_z_gate=qcs_create_matrix(2,2);
      t_gate=qcs_create_matrix(2,2);
      s_gate=qcs_create_matrix(2,2);
      phase_gate=qcs_create_matrix(2,2);
@@ -521,6 +540,18 @@ DYNAMIC_LIB_DECORATION void qcs_build_qubit_gates_matrix()
     (rotate_alpha_gate->m+0)->re=1; (rotate_alpha_gate->m+0)->im=0;     (rotate_alpha_gate->m+1)->re=0; (rotate_alpha_gate->m+1)->im=0;
     (rotate_alpha_gate->m+2)->re=0; (rotate_alpha_gate->m+2)->im=0;     (rotate_alpha_gate->m+3)->re=1; (rotate_alpha_gate->m+3)->im=0;
 
+/* Rotate X gate */
+    (rot_x_gate->m+0)->re=0.0; (rot_x_gate->m+0)->im=0.0;     (rot_x_gate->m+1)->re=0.0; (rot_x_gate->m+1)->im=0.0;
+    (rot_x_gate->m+2)->re=0.0; (rot_x_gate->m+2)->im=0.0;     (rot_x_gate->m+3)->re=0.0; (rot_x_gate->m+3)->im=0.0;
+
+/* Rotate Y gate */
+    (rot_y_gate->m+0)->re=0.0; (rot_y_gate->m+0)->im=0.0;     (rot_y_gate->m+1)->re=0.0; (rot_y_gate->m+1)->im=0.0;
+    (rot_y_gate->m+2)->re=0.0; (rot_y_gate->m+2)->im=0.0;     (rot_y_gate->m+3)->re=0.0; (rot_y_gate->m+3)->im=0.0;
+
+/* Rotate Z gate */
+    (rot_z_gate->m+0)->re=0.0; (rot_z_gate->m+0)->im=0.0;     (rot_z_gate->m+1)->re=0.0; (rot_z_gate->m+1)->im=0.0;
+    (rot_z_gate->m+2)->re=0.0; (rot_z_gate->m+2)->im=0.0;     (rot_z_gate->m+3)->re=0.0; (rot_z_gate->m+3)->im=0.0;
+
 /* T gate matrix */
     (t_gate->m+0)->re=1; (t_gate->m+0)->im=0;     (t_gate->m+1)->re=0;        (t_gate->m+1)->im=0;
     (t_gate->m+2)->re=0; (t_gate->m+2)->im=0;     (t_gate->m+3)->re=0.707107; (t_gate->m+3)->im=0.707107;
@@ -568,32 +599,34 @@ DYNAMIC_LIB_DECORATION void qcs_build_qubit_gates_matrix()
 
 DYNAMIC_LIB_DECORATION void qcs_destroy_qubit_gates_matrix()
 {
+    qcs_hash_table_destroy( qudit_gates_cache );
 
-     qcs_hash_table_destroy( qudit_gates_cache );
-
-     qcs_delete_matrix(zero_reset_gate);
-     qcs_delete_matrix(id_gate);
-     qcs_delete_matrix(not_gate);
-     qcs_delete_matrix(pauli_x_gate);
-     qcs_delete_matrix(pauli_y_gate);
-     qcs_delete_matrix(pauli_z_gate);
-     qcs_delete_matrix(hadamard_gate);
-     qcs_delete_matrix(square_root_gate);
-     qcs_delete_matrix(x_rot90_gate);
-     qcs_delete_matrix(y_rot90_gate);
-     qcs_delete_matrix(z_rot90_gate);
-     qcs_delete_matrix(minus_x_rot90_gate);
-     qcs_delete_matrix(minus_y_rot90_gate);
-     qcs_delete_matrix(minus_z_rot90_gate);
-     qcs_delete_matrix(rotate_alpha_gate);
-     qcs_delete_matrix(rotate_theta_gate);
-     qcs_delete_matrix(t_gate);
-     qcs_delete_matrix(s_gate);
-     qcs_delete_matrix(phase_gate);
-     qcs_delete_matrix(phase_f_gate);
-     qcs_delete_matrix(phase_m11_gate);
-     qcs_delete_matrix(cnot_gate);
-     qcs_delete_matrix(toffoli_gate);
+    qcs_delete_matrix(zero_reset_gate);
+    qcs_delete_matrix(id_gate);
+    qcs_delete_matrix(not_gate);
+    qcs_delete_matrix(pauli_x_gate);
+    qcs_delete_matrix(pauli_y_gate);
+    qcs_delete_matrix(pauli_z_gate);
+    qcs_delete_matrix(hadamard_gate);
+    qcs_delete_matrix(square_root_gate);
+    qcs_delete_matrix(x_rot90_gate);
+    qcs_delete_matrix(y_rot90_gate);
+    qcs_delete_matrix(z_rot90_gate);
+    qcs_delete_matrix(minus_x_rot90_gate);
+    qcs_delete_matrix(minus_y_rot90_gate);
+    qcs_delete_matrix(minus_z_rot90_gate);
+    qcs_delete_matrix(rotate_alpha_gate);
+    qcs_delete_matrix(rotate_theta_gate);
+    qcs_delete_matrix(rot_x_gate);
+    qcs_delete_matrix(rot_y_gate);
+    qcs_delete_matrix(rot_z_gate);
+    qcs_delete_matrix(t_gate);
+    qcs_delete_matrix(s_gate);
+    qcs_delete_matrix(phase_gate);
+    qcs_delete_matrix(phase_f_gate);
+    qcs_delete_matrix(phase_m11_gate);
+    qcs_delete_matrix(cnot_gate);
+    qcs_delete_matrix(toffoli_gate);
 }
 
 /*****/

@@ -62,9 +62,9 @@ tf_qcs_matrix *get_toffoli_gate();
 tf_qcs_matrix *get_swap_gate();
 tf_qcs_matrix *get_fredkin_gate();
 
-tf_qcs_matrix *qcs_rot_x_gate(tf_qcs_real_number theta);
-tf_qcs_matrix *qcs_rot_y_gate(tf_qcs_real_number theta);
-tf_qcs_matrix *qcs_rot_z_gate(tf_qcs_real_number theta);
+tf_qcs_matrix *qcs_get_rot_x_gate(tf_qcs_real_number theta);
+tf_qcs_matrix *qcs_get_rot_y_gate(tf_qcs_real_number theta);
+tf_qcs_matrix *qcs_get_rot_z_gate(tf_qcs_real_number theta);
 
 tf_qcs_matrix *qcs_create_matrix_for_e_2q_gate_float_arg(float gamma);
 tf_qcs_matrix *qcs_create_matrix_for_e_2q_gate(tf_qcs_real_number gamma);

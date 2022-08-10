@@ -817,7 +817,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_mz_rot90_n_gate(tf_qcs_quantum_
 
 }
 
-DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quantum_register *q_reg, tf_qcs_real_number k, int i)
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number alpha)
 {
     char t[128];
     int j;
@@ -839,7 +839,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quan
     {
 
         c.re=0;
-        c.im=(2.0*QCS_PI) / pow(2.0,k);
+        c.im=(2.0*QCS_PI) / pow(2.0, alpha);
         qcs_exp_complex(&c, get_rotate_alpha_gate()->m+3);
 
 //           m=qcs_build_matrix_from_tensor(t);
@@ -860,7 +860,7 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quan
 
 }
 
-DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_theta_n_gate(tf_qcs_quantum_register *q_reg, tf_qcs_real_number theta, int i)
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_theta_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta)
 {
     char t[128];
     int j;
