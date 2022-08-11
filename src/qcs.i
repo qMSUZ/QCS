@@ -45,7 +45,6 @@ computations routines for Python and other languages supported by SWIG."
 
 
 /*
-#include "qcs_matrix.h"
 #include "qcs_complex.h"
 #include "qcs_qubit.h"
 #include "qcs_quantum_reg.h"
@@ -55,14 +54,18 @@ computations routines for Python and other languages supported by SWIG."
 */
 
 
-#include "qcs_quantum_register.h"
 #include "qcs_info.h"
+#include "qcs_matrix_and_vector.h"
+#include "qcs_qubit_gates.h"
+#include "qcs_quantum_register.h"
 
 #define QCS_INTERFACE_VER "0.2.1"
 static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __TIME__")";
 
 %}
 
+%include "qcs_matrix_and_vector.h"
+%include "qcs_qubit_gates.h"
 %include "qcs_quantum_register.h"
 
 #ifdef PYTHON_SCRIPT
@@ -83,6 +86,42 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	PySys_WriteStdout("+ qcs gate's cache initialised\n");
 	PySys_WriteStdout("+ QCS for Python interface version: %s\n", QCS_INTERFACE_VER);
 	PySys_WriteStdout("%s\n", _QCS_I_CompileSystem);
+%}
+#endif
+
+#ifdef PYTHON_SCRIPT
+%pythoncode %{
+
+#def Arange(_s, _e, _step):
+#	return qcs_create_matrix_arange_operation_with_float_args(_s, _e, _step)
+
+#def Linspace(_s, _e, _n, endpoint = True):
+#	if endpoint == True:
+#		return qcs_create_matrix_linspace_operation_with_endpoint_with_float_args(_s, _e, _n)
+#	else:
+#		return qcs_create_matrix_linspace_operation_without_endpoint_with_float_args(_s, _e, _n)
+
+def PrGateForm(gateName):
+	if gateName=="X":
+		qcs_print_matrix( get_pauli_x_gate() )
+		return
+	
+	if gateName=="Y":
+		qcs_print_matrix( get_pauli_y_gate() )
+		return
+	
+	if gateName=="Z":
+		qcs_print_matrix( get_pauli_z_gate() )
+		return
+	
+	if gateName=="H":
+		qcs_print_matrix( get_hadamard_gate() )
+		return
+	
+	if gateName=="CNOT":
+		qcs_print_matrix( get_cnot_gate() )
+		return
+
 %}
 #endif
 

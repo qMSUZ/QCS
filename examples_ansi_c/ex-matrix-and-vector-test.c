@@ -70,6 +70,15 @@ void matrix_test_no_1()
     qcs_delete_matrix(c);
 }
 
+void matrix_test_no_2()
+{
+    printf(".: matrix_test_no_2 :.\n\n");
+
+    printf("Hadamard gate\n");
+    qcs_print_matrix( get_hadamard_gate() );
+    printf("\n");
+}
+
 void vector_test_no_1()
 {
     tf_qcs_matrix *a=NULL, *b=NULL, *c=NULL;
@@ -188,12 +197,14 @@ int main( int argc, char *argv[] )
 	qcs_core_library_initialization();
 
     //matrix_test_no_1();
+    matrix_test_no_2();
 
     //vector_test_no_1();
-    vector_test_no_2();
+    //vector_test_no_2();
     //vector_test_no_2b();
     //vector_test_no_2c();
     //vector_test_no_3();
+
 
 	qcs_core_library_deinitialization();
 

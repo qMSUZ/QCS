@@ -112,7 +112,7 @@ microex5: examples_ansi_c/microexamples.c library
 
 
 clean:
-	rm -f *.o src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py qcs_wrap.c qcs_warp.o \
+	rm -f *.o _qcs.so src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py src/qcs.py qcs_wrap.c qcs_warp.o \
 		examples_python/_qcs.so examples_python/qcs.py \
 		*.pyc \
 		microex1 microex2 microex3 microex4 microex5 \
