@@ -817,6 +817,39 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_mz_rot90_n_gate(tf_qcs_quantum_
 
 }
 
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_x_rot_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta)
+{
+    tf_qcs_matrix *m;
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        m = qcs_get_rot_x_gate( theta );
+        applied_1q_gate_to_quantum_register( q_reg, i, m);
+    }
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_y_rot_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta)
+{
+    tf_qcs_matrix *m;
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        m = qcs_get_rot_y_gate( theta );
+        applied_1q_gate_to_quantum_register( q_reg, i, m);
+    }
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_z_rot_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta)
+{
+    tf_qcs_matrix *m;
+
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        m = qcs_get_rot_z_gate( theta );
+        applied_1q_gate_to_quantum_register( q_reg, i, m);
+    }
+}
+
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number alpha)
 {
     char t[128];

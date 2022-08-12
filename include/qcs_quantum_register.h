@@ -108,14 +108,22 @@ void qcs_quantum_register_had_n_conj_gate(tf_qcs_quantum_register *q_reg, int i)
 void qcs_quantum_register_had_gate_for_whole_register(tf_qcs_quantum_register *q_reg);
 
 void qcs_quantum_register_square_root_not_n_gate(tf_qcs_quantum_register *q_reg, int i);
+
 void qcs_quantum_register_x_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_y_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_z_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+
 void qcs_quantum_register_mx_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_my_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_mz_rot90_n_gate(tf_qcs_quantum_register *q_reg, int i);
+
+void qcs_quantum_register_x_rot_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta);
+void qcs_quantum_register_y_rot_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta);
+void qcs_quantum_register_z_rot_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta);
+
 void qcs_quantum_register_rotate_alpha_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number alpha);
 void qcs_quantum_register_rotate_theta_n_gate(tf_qcs_quantum_register *q_reg, int i, tf_qcs_real_number theta);
+
 void qcs_quantum_register_t_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_v_n_gate(tf_qcs_quantum_register *q_reg, int i);
 void qcs_quantum_register_s_n_gate(tf_qcs_quantum_register *q_reg, int i);

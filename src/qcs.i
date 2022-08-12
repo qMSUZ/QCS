@@ -53,7 +53,7 @@ computations routines for Python and other languages supported by SWIG."
 #include "qcs_info.h"
 */
 
-
+#include "qcs_misc.h"
 #include "qcs_info.h"
 #include "qcs_matrix_and_vector.h"
 #include "qcs_qubit_gates.h"
@@ -64,9 +64,13 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 
 %}
 
+%include "typemaps.i"
+
+%include "qcs_misc.h"
 %include "qcs_matrix_and_vector.h"
 %include "qcs_qubit_gates.h"
 %include "qcs_quantum_register.h"
+
 
 #ifdef PYTHON_SCRIPT
 %init %{
@@ -101,7 +105,7 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 #	else:
 #		return qcs_create_matrix_linspace_operation_without_endpoint_with_float_args(_s, _e, _n)
 
-def PrGateForm(gateName):
+def PrGateForm(gateName, param1=None):
 	if gateName=="X":
 		qcs_print_matrix( get_pauli_x_gate() )
 		return
@@ -122,6 +126,17 @@ def PrGateForm(gateName):
 		qcs_print_matrix( get_cnot_gate() )
 		return
 
+	if gateName=="RX":
+		qcs_print_matrix( qcs_get_rot_x_gate( param1 ) )
+		return
+
+	if gateName=="RY":
+		qcs_print_matrix( qcs_get_rot_y_gate( param1 ) )
+		return
+	if gateName=="RZ":
+		qcs_print_matrix( qcs_get_rot_z_gate( param1 ) )
+		return
+
 %}
 #endif
 
@@ -133,6 +148,7 @@ def PrGateForm(gateName):
 	    QuantumRegister *qr = NULL;
 
 	    qr = qcs_new_quantum_register( 2 );
+		qcs_quantum_register_reset_error_level( qr, 0 );
 
 	    return qr;
 	}
@@ -143,6 +159,7 @@ def PrGateForm(gateName):
 	    QuantumRegister *qr = NULL;
 
 	    qr = qcs_new_quantum_register( qr_size );
+		qcs_quantum_register_reset_error_level( qr, 0 );
 
 	    return qr;
 	}
@@ -150,6 +167,7 @@ def PrGateForm(gateName):
 	%feature("autodoc", "QuantumRegister()") ~QuantumRegister();
 	~QuantumRegister()
 	{
+		qcs_quantum_register_reset_error_level( $self, 0 );
 		qcs_delete_quantum_register( $self );
 	}
 
@@ -157,6 +175,7 @@ def PrGateForm(gateName):
 	void Reset()
 	{
 	    qcs_quantum_register_reset( $self );
+		qcs_quantum_register_reset_error_level( $self, 0 );
 	}
 
 	// method for state set
@@ -193,41 +212,35 @@ def PrGateForm(gateName):
 		qcs_quantum_register_pauli_z_gate( $self, t );
 	}
 
-	%feature("autodoc", "XRotN(int t, tf_qcs_real_number a)");
-	void XRotN(int t, tf_qcs_real_number a)
+	%feature("autodoc", "XRotN(int t, double a)");
+	void XRotN(int t, double a)
 	{
-#ifdef PYTHON_SCRIPT
-		PySys_WriteStdout("Function unimplemented, yet!\n");
-#endif
+		qcs_quantum_register_x_rot_n_gate( $self, t, (tf_qcs_real_number)a );
 	}
 
-	%feature("autodoc", "YRotN(int t, tf_qcs_real_number a)");
-	void YRotN(int t, tf_qcs_real_number a)
+	%feature("autodoc", "YRotN(int t, double a)");
+	void YRotN(int t, double a)
 	{
-#ifdef PYTHON_SCRIPT
-		PySys_WriteStdout("Function unimplemented, yet!\n");
-#endif
+		qcs_quantum_register_y_rot_n_gate( $self, t, (tf_qcs_real_number)a );
 	}
 	
-	%feature("autodoc", "ZRotN(int t, tf_qcs_real_number a)");
-	void ZRotN(int t, tf_qcs_real_number a)
+	%feature("autodoc", "ZRotN(int t, double a)");
+	void ZRotN(int t, double a)
 	{
-#ifdef PYTHON_SCRIPT
-		PySys_WriteStdout("Function unimplemented, yet!\n");
-#endif
+		qcs_quantum_register_z_rot_n_gate( $self, t, (tf_qcs_real_number)a );
 	}
 
 
 	%feature("autodoc", "RotAlphaN(int i, tf_qcs_real_number alpha)");
-	void RotAlphaN(int i, tf_qcs_real_number alpha)
+	void RotAlphaN(int i, double alpha)
 	{
-		qcs_quantum_register_rotate_alpha_n_gate( $self, i, alpha );
+		qcs_quantum_register_rotate_alpha_n_gate( $self, i, (tf_qcs_real_number)alpha );
 	}	
 
 	%feature("autodoc", "RotThetaN(int i, tf_qcs_real_number theta)");
-	void RotThetaN(int i, tf_qcs_real_number theta)
+	void RotThetaN(int i, double theta)
 	{
-		qcs_quantum_register_rotate_theta_n_gate( $self, i, theta );
+		qcs_quantum_register_rotate_theta_n_gate( $self, i, (tf_qcs_real_number)theta );
 	}	
 
 	%feature("autodoc", "MXRot90N(int t)");
@@ -336,11 +349,11 @@ def PrGateForm(gateName):
 		return qcs_quantum_register_measure_one_qubit( $self, t);
 	}
 
-	%feature("autodoc", "ProbeQubitStdBase(int i) -> [p0,p1]") ProbeQubitStdBase(int i, float *p0, float *p1);
-	%apply float *OUTPUT { float *p0, float *p1 };
-	void ProbeQubitStdBase(int i, float *p0, float *p1)
+	%feature("autodoc", "ProbeQubitStdBase(int i) -> [p0,p1]") ProbeQubitStdBase(int i, tf_qcs_real_number *p0, tf_qcs_real_number *p1);
+	%apply tf_qcs_real_number *OUTPUT { tf_qcs_real_number *p0, tf_qcs_real_number *p1 };
+	void ProbeQubitStdBase(int i, tf_qcs_real_number *p0, tf_qcs_real_number *p1)
 	{
-		float _tmp_p0, _tmp_p1;
+		tf_qcs_real_number _tmp_p0, _tmp_p1;
 		qcs_quantum_register_probe_one_qubit_in_std_base( $self, i, &_tmp_p0, &_tmp_p1);
 		
 		*p0 = _tmp_p0;
