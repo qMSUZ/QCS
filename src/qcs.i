@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018, 2019 by Marek Sawerwain                            *
+ *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                     *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -133,6 +133,7 @@ def PrGateForm(gateName, param1=None):
 	if gateName=="RY":
 		qcs_print_matrix( qcs_get_rot_y_gate( param1 ) )
 		return
+	
 	if gateName=="RZ":
 		qcs_print_matrix( qcs_get_rot_z_gate( param1 ) )
 		return
@@ -317,6 +318,24 @@ def PrGateForm(gateName, param1=None):
 		qcs_quantum_register_cnot( $self, c, t);
 	}
 
+	%feature("autodoc", "CHad(int c, int t)");
+	void CHad(int c, int t)
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	}
+
+	// swap gate
+
+	void SwapGate(int t1, int t2)
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	}
+
+
 	// measure operation
 
 	%feature("autodoc", "Measure()");
@@ -331,10 +350,7 @@ def PrGateForm(gateName, param1=None):
 	%feature("autodoc", "M(int t)");
 	int M(int t)
 	{
-#ifdef PYTHON_SCRIPT
-		PySys_WriteStdout("Function unimplemented, yet!\n");
-#endif
-	return -1;
+		return qcs_quantum_register_measure_one_qubit( $self, t);
 	}
 
 	%feature("autodoc", "MeasureN(int _from, int _to)");
@@ -360,11 +376,15 @@ def PrGateForm(gateName, param1=None):
 		*p1 = _tmp_p1;
 	}
 
+	// noop function to no operation idiom
+
 	%feature("autodoc", "Noop()") Noop();
 	void Noop()
 	{
 	    return;
 	}
+
+	// print quantum state to console 
 
 	%feature("autodoc", "Pr()");
 	void Pr()
