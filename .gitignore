@@ -3,3 +3,4 @@ libqcs.a
 *.o
 qcs.py
 src/qcs.py
+examples_python/qcs.py
