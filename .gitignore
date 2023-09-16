@@ -1,0 +1,4 @@
+_qcs.so
+libqcs.a
+*.o
+qcs.py

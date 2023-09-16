@@ -29,9 +29,9 @@ CC=gcc
 CXX=g++
 
 ifeq ($(DEBUG),1) 
-CFLAGS=-g -I./include 
+CFLAGS=-fPIC -g -I./include 
 else
-CFLAGS=-I./include 
+CFLAGS=-fPIC -I./include 
 endif
 
 ifeq ($(PYTHON),1)
@@ -55,15 +55,15 @@ C_MAIN_SOURCES = src/qcs_misc.c \
 	src/qcs_gates.c \
 	src/qcs_quantum_register.c \
 	src/qcs_info.c
-	
+
 C_OBJ_MAIN_SOURCES=$(C_MAIN_SOURCES:.c=.o)
-	
+
 
 all: microex1
 
 
 qcs_wrap.o: src/qcs_wrap.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(PYTHON_CFLAGS) -c $<
 
 src/qcs_wrap.c: src/qcs.i
 	$(SWIGCMD) $(SWIGOPT) $<
