@@ -83,13 +83,14 @@ static const char* _QCS_I_CompileSystem=": compilation date (" __DATE__ " "  __T
 	"   \\\n"
 	);
 
-	PySys_WriteStdout("%s\n", version());
+	PySys_WriteStdout("%s\n", qcs_version());
 	PySys_WriteStdout("%s\n", compile_system());
 	PySys_WriteStdout("%s\n", compilator_name());
 	qcs_core_library_initialization();
 	PySys_WriteStdout("+ qcs gate's cache initialised\n");
 	PySys_WriteStdout("+ QCS for Python interface version: %s\n", QCS_INTERFACE_VER);
 	PySys_WriteStdout("%s\n", _QCS_I_CompileSystem);
+	PySys_WriteStdout("\n");
 %}
 #endif
 
@@ -195,6 +196,24 @@ def PrGateForm(gateName, param1=None):
  
 	// single gate operations
 
+	%feature("autodoc", "PauliX(int t)");
+	void PauliX(int t)
+	{
+		qcs_quantum_register_pauli_x_gate( $self, t );
+	}
+
+	%feature("autodoc", "PauliY(int t)");
+	void PauliY(int t)
+	{
+		qcs_quantum_register_pauli_y_gate( $self, t );
+	}
+
+    %feature("autodoc", "PauliZ(int t)");
+	void PauliZ(int t)
+	{
+		qcs_quantum_register_pauli_z_gate( $self, t );
+	}
+
 	%feature("autodoc", "X(int t)");
 	void X(int t)
 	{
@@ -230,7 +249,6 @@ def PrGateForm(gateName, param1=None):
 	{
 		qcs_quantum_register_z_rot_n_gate( $self, t, (tf_qcs_real_number)a );
 	}
-
 
 	%feature("autodoc", "RotAlphaN(int i, tf_qcs_real_number alpha)");
 	void RotAlphaN(int i, double alpha)
@@ -327,7 +345,6 @@ def PrGateForm(gateName, param1=None):
 	}
 
 	// swap gate
-
 	void SwapGate(int t1, int t2)
 	{
 #ifdef PYTHON_SCRIPT
@@ -375,6 +392,36 @@ def PrGateForm(gateName, param1=None):
 		*p0 = _tmp_p0;
 		*p1 = _tmp_p1;
 	}
+
+	%feature("autodoc", " GetProbabilityAmplitude(int idx) -> [re,im]") GetProbabilityAmplitude(int idx, tf_qcs_real_number *re, tf_qcs_real_number *im);
+	%apply tf_qcs_real_number *OUTPUT { tf_qcs_real_number *re, tf_qcs_real_number *im };
+	void GetProbabilityAmplitude(int idx, tf_qcs_real_number *re, tf_qcs_real_number *im)
+	{
+		if( $self->mode == USE_STATE_VECTOR_QUBIT )
+		{
+			*re = (tf_qcs_real_number)$self->vs[idx].re;
+			*im = (tf_qcs_real_number)$self->vs[idx].im;
+		}
+		else 
+		{
+			*re = (tf_qcs_real_number)-9999.0;
+			*im = (tf_qcs_real_number)-9999.0;
+
+		}
+	}
+
+	%pythoncode %{
+	def ToNumpyArray( self ):
+		import numpy as np
+
+		num_of_elems = self.vec_state_size
+		svec = np.zeros( shape=(num_of_elems,1), dtype=complex )
+		for idx in range(num_of_elems):
+			(re,im) = self.GetProbabilityAmplitude(idx)
+			svec[idx] = re + im * 1J
+
+		return svec
+	%}
 
 	// noop function to no operation idiom
 

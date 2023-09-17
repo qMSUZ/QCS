@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018, 2019, 2022 by Marek Sawerwain                     *
+ *   Copyright (C) 2018, 2019, 2022 -- 2023 by Marek Sawerwain             *
  *                                         <M.Sawerwain@gmail.com>         *
  *                                         <M.Sawerwain@issi.uz.zgora.pl   *
  *                                                                         *
@@ -59,7 +59,7 @@ int _amplitude_disp_type,
 
 static const char* _CompileSystem=": compilation date (" __DATE__ " "  __TIME__")";
 
-DYNAMIC_LIB_DECORATION char* version()
+DYNAMIC_LIB_DECORATION char* qcs_version()
 {
 	return (char*)_Version;
 }

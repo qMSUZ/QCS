@@ -177,6 +177,44 @@ void qcs_gates_test1()
 }
 #endif
 
+#ifdef __microEX6__
+void qcs_probability_amplitudes()
+{
+ 	int i;
+ 	pf_qcs_quantum_register r;
+	tf_qcs_real_number re, im;
+
+ 	r=qcs_new_quantum_register(2);
+
+	qcs_quantum_register_reset(r);
+	printf("Initial state after reset:\n");
+	qcs_quantum_register_print_bin(r);
+	printf("\n");
+
+	for (i=0; i<4; i++)
+	{
+		qcs_quantum_register_get_probability_amplitude(r, i, &re, &im);
+		printf("(%d) %2.5f + i%2.5f\n", i, re, im);
+
+	}
+	printf("\n");
+
+	printf("After hadamard gate (qubit 0)):\n");
+	qcs_quantum_register_had_n_gate(r, 0);
+	qcs_quantum_register_print_bin(r);
+
+	printf("\n");
+	for (i=0; i<4; i++)
+	{
+		qcs_quantum_register_get_probability_amplitude(r, i, &re, &im);
+		printf("(%d) %2.5f + i%2.5f\n", i, re, im);
+	}
+
+
+ 	qcs_delete_quantum_register(r);
+}
+#endif
+
 int main( int argc, char *argv[] )
 {
 	qcs_core_library_initialization();
@@ -213,6 +251,13 @@ int main( int argc, char *argv[] )
 	printf(": qcs_gates_test1\n");
 	qcs_gates_test1();
 #endif
+
+#ifdef __microEX6__
+	printf(": __microEX6__\n");
+	printf(": qcs_gates_test1\n");
+	qcs_probability_amplitudes();
+#endif
+
 
 	qcs_core_library_deinitialization();
 

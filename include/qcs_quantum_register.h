@@ -138,6 +138,8 @@ void qcs_arbitrary_single_gate(tf_qcs_quantum_register *q_reg, tf_qcs_matrix *m,
 void qcs_quantum_register_cnot(tf_qcs_quantum_register *q_reg, int c1, int t);
 void qcs_quantum_register_cnot_conj(tf_qcs_quantum_register *q_reg, int c1, int t);
 
+void qcs_quantum_register_cnot_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t);
+void qcs_quantum_register_toffoli_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t);
 
 void qcs_quantum_register_swap_gate(tf_qcs_quantum_register *q_reg, int a, int b);
 void qcs_quantum_reg_fredkin_gate(tf_qcs_quantum_register *q_reg, int a, int b, int c);
@@ -150,6 +152,7 @@ int qcs_quantum_register_measure_from_to(tf_qcs_quantum_register *q_reg, int q_f
 
 void qcs_quantum_register_probe_one_qubit_in_std_base(tf_qcs_quantum_register *q_reg, int t, tf_qcs_real_number *out_value_0, tf_qcs_real_number *out_value_1);
 
+void qcs_quantum_register_get_probability_amplitude(tf_qcs_quantum_register *q_reg, int idx, tf_qcs_real_number *out_value_re, tf_qcs_real_number *out_value_im);
 tf_qcs_matrix* qcs_quantum_register_generate_density_matrix(tf_qcs_quantum_register *q_reg);
 
 #endif /* __qcs_quantum_register_h__ */

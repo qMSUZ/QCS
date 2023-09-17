@@ -4,7 +4,7 @@
  *   Copyright (C) 2007 -- 2008 by Przemyslaw Ratajczak                    *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
- *   https://github.com/qMSUZ/QCS                                          *
+ *   http://code.google.com/p/qcs                                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

@@ -1283,7 +1283,6 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot(tf_qcs_quantum_register *q
 
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_conj(tf_qcs_quantum_register *q_reg, int c1, int t)
 {
-
     if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
     {
         applied_2q_gate_to_quantum_register_one_control(q_reg, c1, t, get_not_gate());
@@ -1295,6 +1294,20 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_conj(tf_qcs_quantum_regist
     }
 
     if( q_reg->mode == USE_SYMBOLIC_STATE_VECTOR_QUDIT)
+    {
+    }
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t)
+{
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+    }
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_toffoli_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t)
+{
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
     {
     }
 }
@@ -2222,6 +2235,20 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_print_dec(tf_qcs_quantum_regist
             }
         }
     } // if( q_reg->mode == USE_STATE_VECTOR_QUBIT_QUBIT)
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_get_probability_amplitude(tf_qcs_quantum_register *q_reg, int idx, tf_qcs_real_number *out_value_re, tf_qcs_real_number *out_value_im)
+{
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+
+        if (idx <= 1 << q_reg->n )
+        {
+            *out_value_re =  (tf_qcs_real_number) q_reg->vs[idx].re;
+            *out_value_im =  (tf_qcs_real_number) q_reg->vs[idx].im;
+        }
+
+    } // if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
 }
 
 DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_quantum_register_generate_density_matrix(tf_qcs_quantum_register *q_reg)

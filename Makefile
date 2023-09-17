@@ -1,5 +1,5 @@
 #/***************************************************************************
-# *   Copyright (C) 2019, 2021, 2022 by Marek Sawerwain                     *
+# *   Copyright (C) 2019, 2021 -- 2023 by Marek Sawerwain                     *
 # *                                         <M.Sawerwain@gmail.com>         *
 # *                                         <M.Sawerwain@issi.uz.zgora.pl   *
 # *                                                                         *
@@ -110,12 +110,15 @@ microex5: examples_ansi_c/microexamples.c library
 	$(CC) -D__microEX5__ -o microex5 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
 #	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
 
+microex6: examples_ansi_c/microexamples.c library
+	$(CC) -D__microEX6__ -o microex6 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
 
 clean:
 	rm -f *.o _qcs.so src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py src/qcs.py qcs_wrap.c qcs_warp.o \
 		examples_python/_qcs.so examples_python/qcs.py \
 		*.pyc \
-		microex1 microex2 microex3 microex4 microex5 \
+		microex1 microex2 microex3 microex4 microex5 microex6 \
 		ex-rand-test ex-spectral-decomposition-test ex-matrix-and-vector-test
 
 help:

@@ -1,9 +1,8 @@
 /***************************************************************************
- *   Copyright (C) 2005 -- 2010 by Marek Sawerwain                         *
- *                                         <M.Sawerwain@gmail.com>         *
+ *   Copyright (C) 2005 -- 2010 by Marek Sawerwain <qcs@gmail.com>         *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
- *   https://github.com/qMSUZ/QCS                                          *
+ *   http://code.google.com/p/qcs                                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,7 +38,7 @@ extern int use_graph_state_desc_max_qubits;
 extern int pqc_mode_max_qubits;
 extern int chp_mode_max_qubits;
 
-char* version();
+char* qcs_version();
 char* compile_system();
 char* compilator_name();
 
