@@ -10,3 +10,4 @@ __pycache__/qcs.cpython-311.pyc
 .vscode/dryrun.log
 src/qcs_wrap.c
 src/qcs.py
+qcs.py

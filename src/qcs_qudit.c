@@ -1,10 +1,10 @@
 /***************************************************************************
  *   Copyright (C) 2005 -- 2010 by Marek Sawerwain                         *
  *                                         <M.Sawerwain@gmail.com>         *
- *   Copyright (C) 2007 -- 2008 by Przemys³aw Ratajczak                    *
+ *   Copyright (C) 2007 -- 2008 by PrzemysÅ‚aw Ratajczak                    *
  *                                                                         *
  *   Part of the Quantum Computing Simulator:                              *
- *   http://code.google.com/p/qcs                                          *
+ *   https://github.com/qMSUZ/QCS                                          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -309,7 +309,7 @@ DYNAMIC_LIB_DECORATION void applied_2qudit_gate_to_quantum_reg(ts_qcs_qudit_stat
     t++;
 
     step=pow(fd, n - t) - 1; // odstep pomiedzy elementami malych macierzy
-    m=pow(fd, n - 2);        // iloœæ ma³ych macierzy dla przypadku dwuquditowej bramki
+    m=pow(fd, n - 2);        // iloï¿½ï¿½ maï¿½ych macierzy dla przypadku dwuquditowej bramki
 
     for( d=0; d < fd-1;d++)
     {
@@ -318,7 +318,7 @@ DYNAMIC_LIB_DECORATION void applied_2qudit_gate_to_quantum_reg(ts_qcs_qudit_stat
             memset(&irow_addr[0], 0, 128);
             //qcs_dec2bin(i, n - 2, &irow_addr[0]);
             qcs_dec2base_d(i, n-2, fd, &irow_addr[0]);
-            // odpowiednia kolejnoœæ dodawania ditów
+            // odpowiednia kolejnoï¿½ï¿½ dodawania ditï¿½w
             if ( c1 < t )
             {
                 qcs_str_insert_at(c1 - 1, '1'+d, &irow_addr[0]);
@@ -389,14 +389,14 @@ DYNAMIC_LIB_DECORATION void applied_2qudit_gate_to_quantum_reg_one_control(ts_qc
     t++;
 
     step=pow(d, n - t) - 1; // odstep pomiedzy elementami malych macierzy
-    m=pow(d, n - 2);        // iloœæ ma³ych macierzy dla przypadku dwuquditowej bramki
+    m=pow(d, n - 2);        // iloï¿½ï¿½ maï¿½ych macierzy dla przypadku dwuquditowej bramki
 
     for ( i = 0 ; i < m ; i++ )
     {
         memset(&irow_addr[0], 0, 128);
         //qcs_dec2bin(i, n - 2, &irow_addr[0]);
         qcs_dec2base_d(i, n-2, d, &irow_addr[0]);
-        // odpowiednia kolejnoœæ dodawania bitów
+        // odpowiednia kolejnoï¿½ï¿½ dodawania bitï¿½w
         if ( c1 < t )
         {
             qcs_str_insert_at(c1 - 1, '1', &irow_addr[0]);
