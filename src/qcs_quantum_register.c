@@ -1239,8 +1239,8 @@ DYNAMIC_LIB_DECORATION void qcs_arbitrary_single_gate(tf_qcs_quantum_register *q
 
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot(tf_qcs_quantum_register *q_reg, int c1, int t)
 {
-    tf_qcs_qubit qa, qb;
-    tf_qcs_matrix *m;
+    //tf_qcs_qubit qa, qb;
+    //tf_qcs_matrix *m;
 
     if (q_reg->mode==USE_CHP_MODE)
     {
@@ -1298,6 +1298,14 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_conj(tf_qcs_quantum_regist
     }
 }
 
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_cz(tf_qcs_quantum_register *q_reg, int c1, int t)
+{
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+        applied_2q_gate_to_quantum_register_one_control(q_reg, c1, t, get_pauli_z_gate());
+    }
+}
+
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t)
 {
     if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
@@ -1306,6 +1314,13 @@ DYNAMIC_LIB_DECORATION void qcs_quantum_register_cnot_by_elem_permutation(tf_qcs
 }
 
 DYNAMIC_LIB_DECORATION void qcs_quantum_register_toffoli_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t)
+{
+    if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
+    {
+    }
+}
+
+DYNAMIC_LIB_DECORATION void qcs_quantum_register_cz_by_elem_operation(tf_qcs_quantum_register *q_reg, int c1, int t)
 {
     if (q_reg->mode==USE_STATE_VECTOR_QUBIT)
     {

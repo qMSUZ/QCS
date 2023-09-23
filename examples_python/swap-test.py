@@ -26,7 +26,7 @@
 
 import qcs
 
-q=qcs.QuantumReg( 3 )
+q=qcs.QuantumRegister( 3 )
 q.Reset()
 
 q.Pr()

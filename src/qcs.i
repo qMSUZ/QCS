@@ -336,6 +336,13 @@ def PrGateForm(gateName, param1=None):
 		qcs_quantum_register_cnot( $self, c, t);
 	}
 
+	%feature("autodoc", "CZ(int c, int t)");
+	void CZ(int c, int t)
+	{
+		qcs_quantum_register_cz( $self, c, t);
+	}
+
+
 	%feature("autodoc", "CHad(int c, int t)");
 	void CHad(int c, int t)
 	{
@@ -351,6 +358,15 @@ def PrGateForm(gateName, param1=None):
 		PySys_WriteStdout("Function unimplemented, yet!\n");
 #endif
 	}
+
+	// controlled swap gate
+	void CSwapGate(int t1, int t2)
+	{
+#ifdef PYTHON_SCRIPT
+		PySys_WriteStdout("Function unimplemented, yet!\n");
+#endif
+	}
+
 
 
 	// measure operation

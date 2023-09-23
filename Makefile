@@ -38,12 +38,21 @@ ifeq ($(PYTHON),1)
 CFLAGS+=-DPYTHON_SCRIPT $(PYTHON_CFLAGS) -I/opt/intel/oneapi/intelpython/python3.9/include/python3.9 -fPIC
 endif
 
+ifeq ($(WIN64),1)
+CC=cl
+CXX=cl
+CFLAGS+=-DPYTHON_SCRIPT $(PYTHON_CFLAGS) /Ic:\dev\Python310\include
+endif
+
+
 
 SWIGCMD=swig
 SWIGOPT=-DPYTHON_SCRIPT -python -I./include
 PYTHON_LIB=`pkg-config python3 --libs`
 PYTHON_CFLAGS=`pkg-config python3 --cflags`
 QCS_PYTHON_OUT = _qcs.so
+
+
 
 C_MAIN_SOURCES = src/qcs_misc.c \
 	src/qcs_hash_table.c \

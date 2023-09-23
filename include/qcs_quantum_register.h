@@ -138,8 +138,12 @@ void qcs_arbitrary_single_gate(tf_qcs_quantum_register *q_reg, tf_qcs_matrix *m,
 void qcs_quantum_register_cnot(tf_qcs_quantum_register *q_reg, int c1, int t);
 void qcs_quantum_register_cnot_conj(tf_qcs_quantum_register *q_reg, int c1, int t);
 
+void qcs_quantum_register_cz(tf_qcs_quantum_register *q_reg, int c1, int t);
+
 void qcs_quantum_register_cnot_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t);
 void qcs_quantum_register_toffoli_by_elem_permutation(tf_qcs_quantum_register *q_reg, int c1, int t);
+
+void qcs_quantum_register_cz_by_elem_operation(tf_qcs_quantum_register *q_reg, int c1, int t);
 
 void qcs_quantum_register_swap_gate(tf_qcs_quantum_register *q_reg, int a, int b);
 void qcs_quantum_reg_fredkin_gate(tf_qcs_quantum_register *q_reg, int a, int b, int c);
