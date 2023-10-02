@@ -1767,7 +1767,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_create_partial_trace_matrix_1_qudit(tf
 
 /* --------------------------------------------------------------------- */
 
-
+#ifdef USE_BLAS_AND_LAPACK
 extern void cheev_ (char *JOBZ, char *UPLO, int *N, tf_qcs_complex *A, int *LDA, tf_qcs_real_number *W, tf_qcs_complex *WORK, int *LWORK, tf_qcs_real_number *RWORK, int *INFO);
 
 int cheev ( char JOBZ, char UPLO, int N, tf_qcs_complex *A, int LDA, tf_qcs_real_number *W, tf_qcs_complex *WORK, int LWORK, tf_qcs_real_number *RWORK)
@@ -1791,6 +1791,7 @@ int cgesvd ( char JOBU, char JOBVT, int M, int N, tf_qcs_complex *A, int LDA, tf
 
   return INFO;
 }
+#endif // USE_BLAS_AND_LAPACK
 
 DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_mat, tf_qcs_matrix *eigenvalues, tf_qcs_matrix *eigenvectors)
 {
@@ -1811,7 +1812,7 @@ DYNAMIC_LIB_DECORATION void qcs_spectral_decompose_of_matrix(tf_qcs_matrix *a_ma
     A=eigenvectors->m;
 
     info=0;
-    info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
+    //info=cheev('V', 'U', N, A, LDA, W, WORK, LWORK, RWORK);
 
     qcs_transpose_matrix(eigenvectors);
     //qcs_print_matrix( eigenvectors );
@@ -1895,6 +1896,7 @@ DYNAMIC_LIB_DECORATION void qcs_svd_decompose_of_matrix(tf_qcs_matrix *state, tf
     free(RWORK);
     free(WORK);
 }
+
 
 DYNAMIC_LIB_DECORATION tf_qcs_matrix* qcs_square_root_of_operator_matrix(tf_qcs_matrix *a_mat)
 {
@@ -3523,6 +3525,7 @@ DYNAMIC_LIB_DECORATION tf_qcs_real_number qcs_ppt_criterion(tf_qcs_matrix *m)
 
     return t;
 }
+
 
 DYNAMIC_LIB_DECORATION tf_qcs_real_number qcs_ccnr_criterion(tf_qcs_matrix *m)
 {

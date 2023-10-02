@@ -1,5 +1,5 @@
 #/***************************************************************************
-# *   Copyright (C) 2019, 2021 -- 2023 by Marek Sawerwain                     *
+# *   Copyright (C) 2019, 2021 -- 2023 by Marek Sawerwain                   *
 # *                                         <M.Sawerwain@gmail.com>         *
 # *                                         <M.Sawerwain@issi.uz.zgora.pl   *
 # *                                                                         *
@@ -45,6 +45,10 @@ CFLAGS+=-DPYTHON_SCRIPT $(PYTHON_CFLAGS) /Ic:\dev\Python310\include
 endif
 
 
+ifeq ($(USE_BLAS_AND_LAPACK),1)
+CFLAGS+=-DUSE_BLAS_AND_LAPACK
+LD_BLAS_AND_LAPACK = -llapack -lblas -lgfortran -lm
+endif
 
 SWIGCMD=swig
 SWIGOPT=-DPYTHON_SCRIPT -python -I./include
@@ -83,45 +87,45 @@ library: $(C_OBJ_MAIN_SOURCES) $(CC_OBJ_MAIN_SOURCES)
 	@echo "Static library has been created."
 
 python_port: library qcs_wrap.o
-	$(CC) $(LIB_OPT) -shared qcs_wrap.o libqcs.a -o $(QCS_PYTHON_OUT) $(PYTHON_LIB) -llapack -lblas -lgfortran -lm
+	$(CC)  -shared qcs_wrap.o libqcs.a -o $(QCS_PYTHON_OUT) $(PYTHON_LIB) $(LD_BLAS_AND_LAPACK)
 	cp src/qcs.py qcs.py
 	cp src/qcs.py examples_python/qcs.py
 	cp _qcs.so examples_python/_qcs.so
 
 
 ex-spectral-decomposition-test: examples_ansi_c/ex-spectral-decomposition-test.c library
-	$(CC) -o ex-spectral-decomposition-test examples_ansi_c/ex-spectral-decomposition-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3 -llapack -lblas -lgfortran -lm
+	$(CC) -o ex-spectral-decomposition-test examples_ansi_c/ex-spectral-decomposition-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3  $(LD_BLAS_AND_LAPACK)
 
 ex-rand-test: examples_ansi_c/ex-rand-test.c library
-	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9 -llapack -lblas -lgfortran -lm
+	$(CC) -o ex-rand-test examples_ansi_c/ex-rand-test.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9  $(LD_BLAS_AND_LAPACK)
 
 ex-matrix-and-vector-test: examples_ansi_c/ex-matrix-and-vector-test.c library
-	$(CC) -o ex-matrix-and-vector-test examples_ansi_c/ex-matrix-and-vector-test.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
+	$(CC) -o ex-matrix-and-vector-test examples_ansi_c/ex-matrix-and-vector-test.c -I./include -L. $(CFLAGS) -lqcs  $(LD_BLAS_AND_LAPACK)
 
 
 microex1: examples_ansi_c/microexamples.c library
-	$(CC) -D__microEX1__ -o microex1 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
-#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+	$(CC) -D__microEX1__ -o microex1 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs  $(LD_BLAS_AND_LAPACK) -lm
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.9  $(LD_BLAS_AND_LAPACK)
 
 microex2: examples_ansi_c/microexamples.c library
-	$(CC) -D__microEX2__ -o microex2 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
-#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+	$(CC) -D__microEX2__ -o microex2 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs  $(LD_BLAS_AND_LAPACK)
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8  $(LD_BLAS_AND_LAPACK)
 
 microex3: examples_ansi_c/microexamples.c library
-	$(CC) -D__microEX3__ -o microex3 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
-#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+	$(CC) -D__microEX3__ -o microex3 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs  $(LD_BLAS_AND_LAPACK)
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8  $(LD_BLAS_AND_LAPACK)
 
 microex4: examples_ansi_c/microexamples.c library
-	$(CC) -D__microEX4__ -o microex4 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
-#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+	$(CC) -D__microEX4__ -o microex4 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs $(LD_BLAS_AND_LAPACK)
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8  $(LD_BLAS_AND_LAPACK)
 
 microex5: examples_ansi_c/microexamples.c library
-	$(CC) -D__microEX5__ -o microex5 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
-#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+	$(CC) -D__microEX5__ -o microex5 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs $(LD_BLAS_AND_LAPACK)
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 $(LD_BLAS_AND_LAPACK)
 
 microex6: examples_ansi_c/microexamples.c library
-	$(CC) -D__microEX6__ -o microex6 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs -llapack -lblas -lgfortran -lm
-#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 -llapack -lblas -lgfortran -lm
+	$(CC) -D__microEX6__ -o microex6 examples_ansi_c/microexamples.c -I./include -L. $(CFLAGS) -lqcs $(LD_BLAS_AND_LAPACK)
+#	$(CC) -o ex1 examples_ansi_c/ex1.c -I./include -L. $(CFLAGS) $(PYTHON_LIB)  -lqcs -lpython3.8 $(LD_BLAS_AND_LAPACK)
 
 clean:
 	rm -f *.o _qcs.so src/qcs_wrap.c examples_ansi_c/*.o src/*.o libqcs.a qcs.py src/qcs.py qcs_wrap.c qcs_warp.o \
